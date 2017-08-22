@@ -1,0 +1,130 @@
+<div class="card" *ngIf="isLoading">
+    <h4 class="card-header">Loading...</h4>
+    <div class="card-block text-xs-center">
+        <i class="fa fa-circle-o-notch fa-spin fa-3x"></i>
+    </div>
+</div>
+
+<div *ngIf="!isLoading">
+    <container>
+        <row>
+            <column md=3>
+                <h3>Назва</h3>
+            </column>
+            <column md=3>
+                <h3>Повна Назва</h3>
+            </column>
+            <column md=3>
+                <h3>Адреса</h3>
+            </column>
+            <column md=3>
+                <h3>Дії</h3>
+            </column>
+        </row>
+        <row *ngFor="let company of companies">
+            <column md=3>
+                {{company.name}}
+            </column>
+            <column md=3>
+                {{company.name_full}}
+            </column>
+            <column md=3>
+                {{company.address}}
+            </column>
+            <column md=3>
+                <button class="btn btn-sm btn-warning" (click)="enableEditing(company)">
+                    <i class="fa fa-pencil"></i> Редагувати
+                </button>
+                <button class="btn btn-sm btn-danger" (click)="deleteCompany(company)">
+                    <i class="fa fa-trash"></i> Видалити
+                </button>
+            </column>
+        </row>
+    </container>
+</div>
+
+<container *ngIf="isEditing">
+    <row>
+        <form class="form-inline" #form="ngForm" (ngSubmit)="editCompany(company)" style="display:inline">
+            <div class="form-group">
+                <input class="form-control" type="text" name="name" [(ngModel)]="company.name" placeholder="Name" required>
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="text" name="name_full" [(ngModel)]="company.name_full" placeholder="Name full" required>
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="text" name="address" [(ngModel)]="company.address" placeholder="Address" required>
+            </div>
+            <button class="btn btn-sm btn-primary" type="submit" [disabled]="!form.form.valid"><i class="fa fa-floppy-o"></i> Save</button>
+        </form>
+        <button class="btn btn-sm btn-warning" (click)="cancelEditing()"><i class="fa fa-times"></i> Cancel</button>
+    </row>
+</container>
+
+<container *ngIf="!isEditing">
+    <h4 class="card-header">Створити нову організацію</h4>
+    <div class="card-block">
+        <form class="form-inline" [formGroup]="addCompanyForm" (ngSubmit)="addCompany()" style="text-align:center">
+            <div class="form-group">
+                <input class="form-control" type="text" name="name" formControlName="name" placeholder="Name">
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="text" name="name_full" formControlName="name_full" placeholder="Name full">
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="text" name="address" formControlName="address" placeholder="Address">
+            </div>
+            <button class="btn btn-primary" type="submit" [disabled]="!addCompanyForm.valid"><i class="fa fa-floppy-o"></i> Add</button>
+        </form>
+    </div>
+</container>
+<!--div class="card" *ngIf="!isLoading">
+    <h4 class="card-header">Current companies ({{companies.length}})</h4>
+    <div class="card-block">
+        <table class="table table-bordered table-striped">
+            <thead class="thead-default">
+                <tr>
+                    <th>Name</th>
+                    <th>Name Full</th>
+                    <th>Address</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody *ngIf="companies.length === 0">
+                <tr>
+                    <td colspan="4">There are no companies in the DB. Add a new company below.</td>
+                </tr>
+            </tbody>
+            <tbody *ngIf="!isEditing">
+                <tr *ngFor="let company of companies">
+                    <td>{{company.name}}</td>
+                    <td>{{company.name_full}}</td>
+                    <td>{{company.address}}</td>
+                    <td>
+                        <button class="btn btn-sm btn-warning" (click)="enableEditing(company)"><i class="fa fa-pencil"></i> Edit</button>
+                        <button class="btn btn-sm btn-danger" (click)="deleteCompany(company)"><i class="fa fa-trash"></i> Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+            <tbody *ngIf="isEditing">
+                <tr>
+                    <td colspan="4">
+                        <form class="form-inline" #form="ngForm" (ngSubmit)="editCompany(company)" style="display:inline">
+                            <div class="form-group">
+                                <input class="form-control" type="text" name="name" [(ngModel)]="company.name" placeholder="Name" required>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" type="text" name="name_full" [(ngModel)]="company.name_full" placeholder="Name full" required>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" type="text" name="address" [(ngModel)]="company.address" placeholder="Address" required>
+                            </div>
+                            <button class="btn btn-sm btn-primary" type="submit" [disabled]="!form.form.valid"><i class="fa fa-floppy-o"></i> Save</button>
+                        </form>
+                        <button class="btn btn-sm btn-warning" (click)="cancelEditing()"><i class="fa fa-times"></i> Cancel</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div-->

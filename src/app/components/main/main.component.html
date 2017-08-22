@@ -1,0 +1,38 @@
+<app-toast [message]="toast.message">
+</app-toast>
+
+<container>
+    <row>
+        <column md = 4>
+            <h3 *ngFor="let item of menu">
+                {{item.name}}
+                <ul class="list-unstyled">
+                    <li *ngFor="let itemCh of item.children">
+                        <a [routerLink]="'/' + itemCh.routerLink" routerLinkActive="active">
+                            {{ itemCh.name }}
+                        </a>
+                    </li>
+                </ul>
+            </h3>
+        </column>
+        <column md=8>
+            <router-outlet class="container"></router-outlet>
+        </column>
+    </row>
+</container>
+
+<!--md-grid-list cols="4" rowHeight="100px">
+    <md-grid-tile *ngFor="let item of menu" [colspan]="1" [rowspan]="1">
+        <md-grid-tile-header>
+            {{item.name}}
+        </md-grid-tile-header>
+        <md-grid-tile *ngFor="let itemCh of item.children" [colspan]="1" [rowspan]="2">
+            <a [routerLink]="'/' + itemCh.routerLink" routerLinkActive="active">
+                {{ itemCh.name }}
+            </a>
+        </md-grid-tile>
+    </md-grid-tile>
+    <md-grid-tile [colspan]="3">
+        <router-outlet></router-outlet>
+    </md-grid-tile>
+</md-grid-list-->

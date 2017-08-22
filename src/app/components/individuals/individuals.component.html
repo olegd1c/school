@@ -1,0 +1,106 @@
+<div class="card" *ngIf="isLoading">
+    <h4 class="card-header">Loading...</h4>
+    <div class="card-block text-xs-center">
+        <i class="fa fa-circle-o-notch fa-spin fa-3x"></i>
+    </div>
+</div>
+
+<div *ngIf="!isLoading">
+    <container>
+        <row>
+            <column md=2>
+                <h3>Призвище</h3>
+            </column>
+            <column md=2>
+                <h3>Імя</h3>
+            </column>
+            <column md=2>
+                <h3>По-батькові</h3>
+            </column>
+            <column md=2>
+                <h3>Адреса</h3>
+            </column>
+            <column md=2>
+                <h3>ІПН</h3>
+            </column>
+            <column md=2>
+                <h3>Дії</h3>
+            </column>
+        </row>
+        <row *ngFor="let individual of individuals">
+            <column md=2>
+                {{individual.last_name}}
+            </column>
+            <column md=2>
+                {{individual.first_name}}
+            </column>
+            <column md=2>
+                {{individual.father_name}}
+            </column>
+            <column md=2>
+                {{individual.address}}
+            </column>
+            <column md=2>
+                {{individual.inn}}
+            </column>
+            <column md=2>
+                <button class="btn btn-sm btn-warning" (click)="enableEditing(individual)">
+                    <i class="fa fa-pencil"></i> Редагувати
+                </button>
+                <button class="btn btn-sm btn-danger" (click)="deleteIndividual(individual)">
+                    <i class="fa fa-trash"></i> Видалити
+                </button>
+            </column>
+        </row>
+    </container>
+</div>
+
+<container *ngIf="isEditing">
+    <row>
+        <form class="form-inline" #form="ngForm" (ngSubmit)="editIndividual(individual)" style="display:inline">
+            <div class="form-group">
+                <input class="form-control" type="text" name="last_name" [(ngModel)]="individual.last_name" placeholder="Прізвище" required>
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="text" name="first_name" [(ngModel)]="individual.first_name" placeholder="Ім'я" required>
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="text" name="father_name" [(ngModel)]="individual.father_name" placeholder="По-батькові"
+                    required>
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="text" name="address" [(ngModel)]="individual.address" placeholder="Адреса" required>
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="text" name="inn" [(ngModel)]="individual.inn" placeholder="Інн" required>
+            </div>
+            <button class="btn btn-sm btn-primary" type="submit" [disabled]="!form.form.valid"><i class="fa fa-floppy-o"></i> Save</button>
+        </form>
+        <button class="btn btn-sm btn-warning" (click)="cancelEditing()"><i class="fa fa-times"></i> Cancel</button>
+    </row>
+</container>
+
+<container *ngIf="!isEditing">
+    <h4 class="card-header">Створити нову физ.особу</h4>
+    <div class="card-block">
+        <form class="form-inline" [formGroup]="addIndividualForm" (ngSubmit)="addIndividual()" style="text-align:center">
+            <div class="form-group">
+                <input class="form-control" type="text" name="last_name" formControlName="last_name" placeholder="Прізвище">
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="text" name="first_name" formControlName="first_name" placeholder="Ім'я">
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="text" name="father_name" formControlName="father_name" placeholder="По-батькові">
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="text" name="address" formControlName="address" placeholder="Address">
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="text" name="inn" formControlName="inn" placeholder="ІПН">
+            </div>
+            <button class="btn btn-primary" type="submit" [disabled]="!addIndividualForm.valid">
+              <i class="fa fa-floppy-o"></i>Добавити</button>
+        </form>
+    </div>
+</container>
