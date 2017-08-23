@@ -7,14 +7,14 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class MainService {
 
-    private headers = new Headers({ 'Content-Type': 'application/json', 'charset': 'UTF-8' });
-    private options = new RequestOptions({ headers: this.headers });
-    private url_api: string = '/api/';
+    protected headers = new Headers({ 'Content-Type': 'application/json', 'charset': 'UTF-8' });
+    protected options = new RequestOptions({ headers: this.headers });
+    protected url_api: string = '/api/';
     private companies: string = 'companies';
     private individuals: string = 'individuals';
     private types_charges: string = 'types-charges';
 
-    constructor(private http: Http) { }
+    constructor(protected http: Http) { }
 
     //company
     getCompanies(): Observable<any> {

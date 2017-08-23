@@ -1,20 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ToastComponent } from '@app/components//toast/toast.component';
-import { CompaniesService } from '@app/services';
+import { PositionsService } from '@app/services';
 import { Company } from '@app/models/company';
 
-@Component({
-    selector: 'app-companies',
-    templateUrl: './companies-list.component.html',
-    styleUrls: ['./companies.component.css']
-})
-export class CompaniesComponent implements OnInit {
 
-    companies = [];
+@Component({
+  selector: 'app-positions',
+  templateUrl: './positions.component.html',
+  styleUrls: ['./positions.component.css']
+})
+export class PositionsComponent implements OnInit {
+
+    positions = [];
     isLoading = true;
 
-    company = {};
+    position = {};
     isEditing = false;
 
     public addCompanyForm: FormGroup;
@@ -22,7 +23,7 @@ export class CompaniesComponent implements OnInit {
     name_full = new FormControl('', Validators.required);
     address = new FormControl('', Validators.required);
 
-    constructor(private dataService: CompaniesService,
+    constructor(private dataService: PositionsService,
         public toast: ToastComponent,
         public formBuilder: FormBuilder) { }
 
@@ -37,7 +38,7 @@ export class CompaniesComponent implements OnInit {
     }
     getCompanies() {
         this.dataService._get().subscribe(
-            data => this.companies = data,
+            data => this.positions = data,
             error => console.log(error),
             () => this.isLoading = false
         );
@@ -47,7 +48,7 @@ export class CompaniesComponent implements OnInit {
         this.dataService._add(this.addCompanyForm.value).subscribe(
             res => {
                 const newCompany = res.json();
-                this.companies.push(newCompany);
+                this.positions.push(newCompany);
                 this.addCompanyForm.reset();
                 this.toast.setMessage('item added successfully.', 'success');
             },
@@ -57,33 +58,33 @@ export class CompaniesComponent implements OnInit {
 
     enableEditing(company) {
         this.isEditing = true;
-        this.company = company;
+        this.position = company;
     }
 
     cancelEditing() {
         this.isEditing = false;
-        this.company = {};
+        this.position = {};
         this.toast.setMessage('item editing cancelled.', 'warning');
         this.getCompanies();
     }
 
-    editCompany(company) {
-        this.dataService._edit(company).subscribe(
+    editCompany(position) {
+        this.dataService._edit(position).subscribe(
             res => {
                 this.isEditing = false;
-                this.company = company;
+                this.position = position;
                 this.toast.setMessage('item edited successfully.', 'success');
             },
             error => console.log(error)
         );
     }
 
-    deleteCompany(company) {
+    deleteCompany(position) {
         if (window.confirm('Are you sure you want to permanently delete this item?')) {
-            this.dataService._delete(company).subscribe(
+            this.dataService._delete(position).subscribe(
                 res => {
-                    const pos = this.companies.map(elem => { return elem._id; }).indexOf(company._id);
-                    this.companies.splice(pos, 1);
+                    const pos = this.positions.map(elem => { return elem._id; }).indexOf(position._id);
+                    this.positions.splice(pos, 1);
                     this.toast.setMessage('item deleted successfully.', 'success');
                 },
                 error => console.log(error)

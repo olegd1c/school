@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ToastComponent } from '@app/components/toast/toast.component';
-import { MainService } from '@app/services/main.service';
+import { TypesChargesService } from '@app/services';
 import { TypeCharge } from '@app/models/type-charge';
 
 @Component({
@@ -20,7 +20,7 @@ export class TypesChargesComponent implements OnInit {
     public addTypeChargeForm: FormGroup;
     name = new FormControl('', Validators.required);
 
-    constructor(private dataService: MainService,
+    constructor(private dataService: TypesChargesService,
         public toast: ToastComponent,
         public formBuilder: FormBuilder) { }
 
@@ -32,7 +32,7 @@ export class TypesChargesComponent implements OnInit {
         this.getTypesCharges();
     }
     getTypesCharges() {
-        this.dataService.getTypesCharges().subscribe(
+        this.dataService._get().subscribe(
             data => this.typesCharges = data,
             error => console.log(error),
             () => this.isLoading = false
@@ -40,7 +40,7 @@ export class TypesChargesComponent implements OnInit {
     }
 
     addTypeCharge() {
-        this.dataService.addTypeCharge(this.addTypeChargeForm.value).subscribe(
+        this.dataService._add(this.addTypeChargeForm.value).subscribe(
             res => {
                 const newTypeCharge = res.json();
                 this.typesCharges.push(newTypeCharge);
@@ -64,7 +64,7 @@ export class TypesChargesComponent implements OnInit {
     }
 
     editTypeCharge(typeCharge) {
-        this.dataService.editTypeCharge(typeCharge).subscribe(
+        this.dataService._edit(typeCharge).subscribe(
             res => {
                 this.isEditing = false;
                 this.typeCharge = typeCharge;
@@ -76,7 +76,7 @@ export class TypesChargesComponent implements OnInit {
 
     deleteTypeCharge(typeCharge) {
         if (window.confirm('Are you sure you want to permanently delete this item?')) {
-            this.dataService.deleteIndividual(typeCharge).subscribe(
+            this.dataService._delete(typeCharge).subscribe(
                 res => {
                     const pos = this.typesCharges.map(elem => { return elem._id; }).indexOf(typeCharge._id);
                     this.typesCharges.splice(pos, 1);

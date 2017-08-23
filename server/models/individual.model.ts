@@ -12,7 +12,7 @@ const individualSchema = new mongoose.Schema({
     updatedAt: {
         type: Number,
         default: null
-    },    
+    },
 });
 
 const Individual = mongoose.model('Individual', individualSchema);

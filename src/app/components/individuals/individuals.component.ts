@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ToastComponent } from '@app/components/toast/toast.component';
-import { MainService } from '@app/services/main.service';
+import { IndividualsService } from '@app/services';
 import { Individual } from '@app/models/individual';
 
 @Component({
@@ -24,7 +24,7 @@ export class IndividualsComponent implements OnInit {
     address = new FormControl('', Validators.required);
     inn = new FormControl('', Validators.required);
 
-    constructor(private dataService: MainService,
+    constructor(private dataService: IndividualsService,
         public toast: ToastComponent,
         public formBuilder: FormBuilder) { }
 
@@ -40,7 +40,7 @@ export class IndividualsComponent implements OnInit {
         this.getIndividuals();
     }
     getIndividuals() {
-        this.dataService.getIndividuals().subscribe(
+        this.dataService._get().subscribe(
             data => this.individuals = data,
             error => console.log(error),
             () => this.isLoading = false
@@ -48,7 +48,7 @@ export class IndividualsComponent implements OnInit {
     }
 
     addIndividual() {
-        this.dataService.addIndividual(this.addIndividualForm.value).subscribe(
+        this.dataService._add(this.addIndividualForm.value).subscribe(
             res => {
                 const newIndividual = res.json();
                 this.individuals.push(newIndividual);
@@ -72,7 +72,7 @@ export class IndividualsComponent implements OnInit {
     }
 
     editIndividual(individual) {
-        this.dataService.editIndividual(individual).subscribe(
+        this.dataService._edit(individual).subscribe(
             res => {
                 this.isEditing = false;
                 this.individual = individual;
@@ -84,7 +84,7 @@ export class IndividualsComponent implements OnInit {
 
     deleteIndividual(individual) {
         if (window.confirm('Are you sure you want to permanently delete this item?')) {
-            this.dataService.deleteIndividual(individual).subscribe(
+            this.dataService._delete(individual).subscribe(
                 res => {
                     const pos = this.individuals.map(elem => { return elem._id; }).indexOf(individual._id);
                     this.individuals.splice(pos, 1);

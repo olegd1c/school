@@ -8,7 +8,7 @@ const typeСhargeSchema = new mongoose.Schema({
     updatedAt: {
         type: Number,
         default: null
-    },    
+    },
 });
 
 const TypeСharge = mongoose.model('TypeСharge', typeСhargeSchema);

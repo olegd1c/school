@@ -24,17 +24,17 @@ const db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {
-  console.log('Connected to MongoDB');
+    console.log('Connected to MongoDB');
 
-  setRoutes(app);
+    setRoutes(app);
 
-  app.get('/*', function (req, res) {
-    res.sendFile(path.join(__dirname, '../public/index.html'));
-  });
+    app.get('/*', function (req, res) {
+        res.sendFile(path.join(__dirname, '../public/index.html'));
+    });
 
-  app.listen(app.get('port'), () => {
-    console.log('Angular 2 Full Stack listening on port ' + app.get('port'));
-  });
+    app.listen(app.get('port'), () => {
+        console.log('Angular 2 Full Stack listening on port ' + app.get('port'));
+    });
 
 });
 

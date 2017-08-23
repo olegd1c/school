@@ -18,10 +18,14 @@ export interface IAppConfig {
   langs: ILanguage[];
   defLang: ILanguage;
   lngList: string[];
+  apiUrl: string;
 }
+
+const API_URL: string = '/api/';
 
 export const AppConfig: IAppConfig = {
   langs: LANGS,
   defLang: LANGS[1],
-  lngList: LANGS_LIST
+  lngList: LANGS_LIST,
+  apiUrl: API_URL
 };
