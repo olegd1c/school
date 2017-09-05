@@ -1,3 +1,48 @@
-<p>
-  positions works!
-</p>
+<div class="card" *ngIf="isLoading">
+    <h4 class="card-header">Loading...</h4>
+    <div class="card-block text-xs-center">
+        <i class="fa fa-circle-o-notch fa-spin fa-3x"></i>
+    </div>
+</div>
+
+<div *ngIf="!isLoading">
+    <container>
+        <row>
+            <a routerLink='/main/position-item' class="btn btn-info" role="button">
+                <i class="fa fa-plus"> Створити посаду</i>
+            </a>
+            <!--button class="btn btn-sm btn-warning" (click)="enableAdd()">
+                <i class="fa fa-plus"> Створити посаду</i>
+            </button-->
+        </row>
+        <row>
+            <column md=2>
+                <h3>Назва</h3>
+            </column>
+            <column md=3>
+                <h3>Види нарахувань</h3>
+            </column>
+            <column md=2>
+                <h3>Дії</h3>
+            </column>
+        </row>
+        <row *ngFor="let position of positions">
+            <column md=2>
+                {{position.name}}
+            </column>
+            <column md=3>
+                <span *ngFor="let type of position.typeChargeIds">
+                    {{type.name}}, 
+                </span>
+            </column>
+            <column md=2>
+                <button class="btn btn-sm btn-warning" (click)="enableEditing(position)">
+                    <i class="fa fa-pencil"></i>
+                </button>
+                <button class="btn btn-sm btn-danger" (click)="deletePosition(position)">
+                    <i class="fa fa-trash"></i>
+                </button>
+            </column>
+        </row>
+    </container>
+</div>

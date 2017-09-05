@@ -36,11 +36,11 @@ export class HttpService extends HttpClient {
     }
 
     _add(entity: any): Observable<any> {
-        return this.post(`${this.url}`, JSON.stringify(entity), this.options);
+        return this.post(`${this.url}`, JSON.stringify(entity), this.optionsR);
     }
 
     _getOne(entity: any): Observable<any> {
-        return this.get(`${this.url}/${entity._id}`, this.options);
+        return this.get(`${this.url}/${entity._id}`, this.optionsR);
     }
 
     _edit(entity: any): Observable<any> {
@@ -48,6 +48,6 @@ export class HttpService extends HttpClient {
     }
 
     _delete(entity: any): Observable<any> {
-        return this.delete(`${this.url}/${entity._id}`, this.options);
+        return this.delete(`${this.url}/${entity._id}`, this.optionsR);
     }
 }

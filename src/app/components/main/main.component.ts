@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Http } from '@angular/http';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ToastComponent } from './../toast/toast.component';
-import { MainService } from '../../services/main.service';
 import { Menu } from '@app/models/menu.ts';
 
 @Component({
@@ -30,9 +29,34 @@ export class MainComponent implements OnInit {
                     name: 'Види нарахувань',
                     permission: ['admin'],
                     routerLink: 'main/types-charges'
-                }                
+                },
+                {
+                    name: 'Посади',
+                    permission: ['admin'],
+                    routerLink: 'main/positions'
+                },
+                {
+                    name: 'Види бюджету',
+                    permission: ['admin'],
+                    routerLink: 'main/type-budgets'
+                },                
             ]
         },
+        {
+            name: 'Документи',
+            children: [
+                {
+                    name: 'Прийом на роботу',
+                    permission: ['admin'],
+                    routerLink: 'main/recruitments'
+                },
+                {
+                    name: 'Табель',
+                    permission: ['admin'],
+                    routerLink: 'main/time-sheets'
+                },
+            ]
+        }
     ];
 
     constructor(private http: Http,

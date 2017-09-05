@@ -1,0 +1,93 @@
+<container>
+    <h4 class="card-header">{{_title}} </h4>
+    <div class="card-block" *ngIf="countLoading == 5">
+        <container>
+            <form class="form-inline" [formGroup]="addRecruitmentForm" (ngSubmit)="addRecruitment()" style="text-align:center">
+                <row>
+                    <label for="companyId">Організація</label>
+                    <select>
+                        <option *ngFor="let itemC of companies" [value]="itemC._id" [selected]="recruitment.companyId._id == itemC._id">{{itemC.name}}</option>
+                    </select>                    
+                    <!--input class="form-control" [(ngModel)]="recruitment.companyId" type="text" name="companyId" formControlName="companyId"
+                        value="{{recruitment.companyId?.name}}" placeholder="Організація"-->
+                </row>
+                <row>
+                    <label for="number">Номер документа</label>
+                    <input class="form-control" [(ngModel)]="recruitment.number" type="text" name="number" formControlName="number" placeholder="Номер документа">
+                </row>
+                <row>
+                    <label for="number">Дата документа</label>
+                    <input class="form-control" [(ngModel)]="recruitment.date" type="text" name="date" formControlName="date" placeholder="Дата документа">
+                </row>
+                <div *ngFor="let detail of recruitment.details; let i = index">
+                    <row>
+                        <label>Норме рядка: </label> {{i+1}}
+                    </row>
+                    <row>
+                        <label>Співробітник</label>
+                        <select (change)="editIndividual($event)">
+                            <option *ngFor="let itemI of individuals" [value]="itemI._id" [selected]="detail.individualId._id == itemI._id">{{itemI.fio}}</option>
+                        </select>
+                    </row>
+                    <row>
+                        <label>Посада</label>
+                        <select (change)="editPosition($event)">
+                            <option *ngFor="let itemP of positions" [value]="itemP._id" [selected]="detail.positionId._id == itemP._id">{{itemP.name}}</option>
+                        </select>
+                    </row>
+                    <row>
+                        <label for="number">Дата прийому</label>
+                        <input class="form-control" type="date"
+                            value="{{getDate(detail.date_receipt)}}" placeholder="Дата прийому">
+                    </row>
+                    <row>
+                        <label for="number">Дата прийому</label>
+                        <input class="form-control" type="date"
+                            value="{{getDate(detail.date_dismissal)}}" placeholder="Дата звільнення">
+                    </row>
+                    <row>
+                        <label for="number">Оклад</label>
+                        <input class="form-control" type="number"
+                            value="{{detail.salary}}" placeholder="Оклад">
+                    </row>
+                    <row>
+                        <label for="number">Ставка (шт.)</label>
+                        <input class="form-control" type="number" step="0.01"
+                            value="{{detail.rate}}" placeholder="Ставка (шт.)">
+                    </row>
+                    <column md=1>
+                        {{detail.mainWork}}
+                    </column>
+                    <column md=1>
+                        {{detail.typeBudgetId.name}}
+                    </column>
+                    <column md=1>
+                        <span *ngFor="let type of detail.charges">
+                                        {{type.typeChargeId.name}}, 
+                                    </span>
+                    </column>
+                    <button class="btn btn-sm btn-danger" (click)="deleteDetail(detail)">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </div>
+
+                <!--row *ngFor="let type of position.typeChargeIds">
+                <select (change)="addTypeCharges($event)">
+                    <option *ngFor="let item of typesCharges" [value]="item._id" [selected]="type._id == item._id">{{item.name}}</option>
+                </select>
+                <button class="btn btn-sm btn-danger" (click)="deleteTypeCharge(type)">
+                    <i class="fa fa-trash"></i>
+                </button>
+            </row-->
+                <row>
+                    <select (change)="addTypeCharges($event)">
+                    <option *ngFor="let item of typesCharges" [value]="item._id">{{item.name}}</option>
+                </select>
+                </row>
+
+                <button class="btn btn-primary" type="submit" [disabled]="!addRecruitmentForm.valid">
+              <i class="fa fa-floppy-o"></i>{{_title_button}}</button>
+            </form>
+        </container>
+    </div>
+</container>

@@ -1,13 +1,16 @@
-import Positions from '../models/positions.model';
+import Recruitment from '../models/recruitment.model';
 import BaseCtrl from './base';
 
-export default class PositionsCtrl extends BaseCtrl {
-    model = Positions;
+export default class RecruitmentsCtrl extends BaseCtrl {
+    model = Recruitment;
 
-    // Get all
+    // Get all 
     getAll = (req, res) => {
         this.model.find()
-        .populate('typeChargeIds')
+        .populate('companyId')
+        .populate('details.individualId')
+        .populate('details.positionId')
+        .populate('details.charges.typeChargeId')
         .exec(function(err, positions) {
             if(err) return console.error(err);
             console.log(positions);
@@ -31,7 +34,11 @@ export default class PositionsCtrl extends BaseCtrl {
     // Get by id
     get = (req, res) => {
         this.model.findOne({ _id: req.params.id })
-        .populate('typeChargeIds')
+        .populate('companyId')
+        .populate('details.individualId')
+        .populate('details.positionId')
+        .populate('details.charges.typeChargeId')
+        .populate('details.typeBudgetId')        
         .exec(function(err, position) {
             if(err) return console.error(err);
             console.log(position);

@@ -50,7 +50,7 @@ export class IndividualsComponent implements OnInit {
     addIndividual() {
         this.dataService._add(this.addIndividualForm.value).subscribe(
             res => {
-                const newIndividual = res.json();
+                const newIndividual = res;
                 this.individuals.push(newIndividual);
                 this.addIndividualForm.reset();
                 this.toast.setMessage('item added successfully.', 'success');

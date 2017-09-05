@@ -3,7 +3,7 @@
 
 <container>
     <row>
-        <column md = 4>
+        <column md = 2>
             <h3 *ngFor="let item of menu">
                 {{item.name}}
                 <ul class="list-unstyled">
@@ -15,7 +15,7 @@
                 </ul>
             </h3>
         </column>
-        <column md=8>
+        <column md=10>
             <router-outlet class="container"></router-outlet>
         </column>
     </row>

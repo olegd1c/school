@@ -1,8 +1,8 @@
 import * as mongoose from 'mongoose';
 
-const positionsSchema = new mongoose.Schema({
+const positionSchema = new mongoose.Schema({
     name: String,
-    typesСhargesId: [mongoose.Schema.Types.ObjectId],
+    typeChargeIds: [{type: mongoose.Schema.Types.ObjectId, ref: 'TypeCharge'}],
     createdAt: {
         type: Number,
     },
@@ -12,6 +12,6 @@ const positionsSchema = new mongoose.Schema({
     },
 });
 
-const Positions = mongoose.model('Positions', positionsSchema);
+const Positions = mongoose.model('Position', positionSchema);
 
 export default Positions;

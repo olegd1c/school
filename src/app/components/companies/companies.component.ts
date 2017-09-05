@@ -46,7 +46,7 @@ export class CompaniesComponent implements OnInit {
     addCompany() {
         this.dataService._add(this.addCompanyForm.value).subscribe(
             res => {
-                const newCompany = res.json();
+                const newCompany = res;
                 this.companies.push(newCompany);
                 this.addCompanyForm.reset();
                 this.toast.setMessage('item added successfully.', 'success');

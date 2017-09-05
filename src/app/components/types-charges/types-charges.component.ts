@@ -42,7 +42,7 @@ export class TypesChargesComponent implements OnInit {
     addTypeCharge() {
         this.dataService._add(this.addTypeChargeForm.value).subscribe(
             res => {
-                const newTypeCharge = res.json();
+                const newTypeCharge: TypeCharge = res;
                 this.typesCharges.push(newTypeCharge);
                 this.addTypeChargeForm.reset();
                 this.toast.setMessage('item added successfully.', 'success');

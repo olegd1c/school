@@ -1,0 +1,26 @@
+<container>
+    <h4 class="card-header">{{_title}} </h4>
+    <div class="card-block" *ngIf="!isLoading && !isLoadingType">
+        <form class="form-inline" [formGroup]="addPositionForm" (ngSubmit)="addPosition()" style="text-align:center">
+            <div class="form-group">
+                <input class="form-control" [(ngModel)]="position.name" type="text" name="name" formControlName="name" placeholder="Назва">
+            </div>
+            <row *ngFor="let type of position.typeChargeIds">
+                <select (change)="addTypeCharges($event)">
+                    <option *ngFor="let item of typesCharges" [value]="item._id" [selected]="type._id == item._id">{{item.name}}</option>
+                </select>
+                <button class="btn btn-sm btn-danger" (click)="deleteTypeCharge(type)">
+                    <i class="fa fa-trash"></i>
+                </button>
+            </row>
+            <row>
+                <select (change)="addTypeCharges($event)">
+                    <option *ngFor="let item of typesCharges" [value]="item._id">{{item.name}}</option>
+                </select>
+            </row>
+
+            <button class="btn btn-primary" type="submit" [disabled]="!addPositionForm.valid">
+              <i class="fa fa-floppy-o"></i>{{_title_button}}</button>
+        </form>
+    </div>
+</container>
