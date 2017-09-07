@@ -5,6 +5,7 @@ const typeChargeSchema = new mongoose.Schema({
         type: String,
         required: true
       },
+    typeOperation: String,
     createdAt: {
         type: Number,
     },

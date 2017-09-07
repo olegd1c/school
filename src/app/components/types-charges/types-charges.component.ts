@@ -19,6 +19,7 @@ export class TypesChargesComponent implements OnInit {
 
     public addTypeChargeForm: FormGroup;
     name = new FormControl('', Validators.required);
+    typeOperation = new FormControl('', Validators.required);
 
     constructor(private dataService: TypesChargesService,
         public toast: ToastComponent,
@@ -26,7 +27,8 @@ export class TypesChargesComponent implements OnInit {
 
     ngOnInit() {
         this.addTypeChargeForm = this.formBuilder.group({
-            name: this.name
+            name: this.name,
+            typeOperation: this.typeOperation
         });        
         
         this.getTypesCharges();

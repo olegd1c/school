@@ -7,7 +7,6 @@ import { TypeBudget } from '@app/models/type-budget';
 
 export interface Charge{
     typeChargeId: TypeCharge;
-    typeOperation: string;
     count: number;
 }
 
@@ -19,7 +18,7 @@ export interface RecruitmentDetails{
     salary: number;
     rate: number;
     main_work: string;
-    budget_type: TypeBudget;
+    typeBudgetId: TypeBudget;
     charges: Charge[];
 }
 

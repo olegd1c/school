@@ -2,7 +2,6 @@ import * as mongoose from 'mongoose';
 
 const ChargeSchema = new mongoose.Schema({
     typeChargeId: {type: mongoose.Schema.Types.ObjectId, ref: 'TypeCharge'},
-    typeOperation: String,
     count: Number
 });
 
