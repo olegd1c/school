@@ -8,10 +8,11 @@ const individualSchema = new mongoose.Schema({
     address: String,
     inn: String,
     createdAt: {
-        type: Number,
+        type: Date,
+        default: new Date()
     },
     updatedAt: {
-        type: Number,
+        type: Date,
         default: null
     },
 });

@@ -8,9 +8,9 @@ const ChargeSchema = new mongoose.Schema({
 const recruitmentDetailsSchema = new mongoose.Schema({
     positionId: {type: mongoose.Schema.Types.ObjectId, ref: 'Position'},
     individualId: {type: mongoose.Schema.Types.ObjectId, ref: 'Individual'},    
-    date_receipt: Number,
+    date_receipt: Date,
     date_dismissal: {
-        type: Number,
+        type: Date,
         default: null
     },
     salary: Number,
@@ -26,14 +26,15 @@ const recruitmentDetailsSchema = new mongoose.Schema({
 
 const recruitmentSchema = new mongoose.Schema({
     number: String,
-    date: Number,
+    date: Date,
     companyId: {type: mongoose.Schema.Types.ObjectId, ref: 'Company'},
     details: [recruitmentDetailsSchema],
     createdAt: {
-        type: Number,
+        type: Date,
+        default: new Date()
     },
     updatedAt: {
-        type: Number,
+        type: Date,
         default: null
     },
 });

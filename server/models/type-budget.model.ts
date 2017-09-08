@@ -4,10 +4,11 @@ const typeBudgetSchema = new mongoose.Schema({
     name: String,	
     account: Number,
     createdAt: {
-        type: Number,
+        type: Date,
+        default: new Date()
     },
     updatedAt: {
-        type: Number,
+        type: Date,
         default: null
     },
 });

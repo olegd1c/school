@@ -30,18 +30,18 @@
             </column>
         </row>
         <row *ngFor="let recruitment of recruitments">
-            <column md=2>
-                {{recruitment.companyId.name}}
+            <column md=2>                
+                {{recruitment.companyId?.name}}
             </column>
             <column md=2>
                 {{recruitment.number}}
             </column>
             <column md=2>
-                {{recruitment.date}}
+                {{recruitment.date | date: 'dd/MM/yyyy'}}
             </column>
             <column md=3>
                 <span *ngFor="let detail of recruitment.details">
-                    {{detail.individualId.fio}},
+                    {{detail.individualId?.fio}},
                 </span>
             </column>
             <column md=2>

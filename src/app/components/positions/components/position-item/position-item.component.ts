@@ -66,7 +66,7 @@ export class PositionItemComponent implements OnInit {
         this.typesChargesService._get().subscribe(
             data => {
                 this.typesCharges = data;
-                this.typesCharges.unshift({_id: '', name: ''});
+                this.typesCharges.unshift({_id: '', name: '', typeOperation: ''});
             },
             error => console.log(error),
             () => this.isLoadingType = false

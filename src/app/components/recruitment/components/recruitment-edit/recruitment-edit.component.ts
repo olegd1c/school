@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ToastComponent } from '@app/components//toast/toast.component';
 import { RecruitmentsService, TypesChargesService, IndividualsService, CompaniesService, PositionsService, TypeBudgetsService } from '@app/services';
-import { Recruitment, TypeCharge, Individual, Company, Position, TypeBudget } from '@app/models';
+import { Recruitment, TypeCharge, Individual, Company, Position, TypeBudget, RecruitmentDetails } from '@app/models';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -20,10 +20,6 @@ export class RecruitmentEditComponent implements OnInit {
     public isEditing: boolean = false;
     public loadingTotal: number = 6;
     public addRecruitmentForm: FormGroup;
-    number = new FormControl('', Validators.required);
-    date = new FormControl('', Validators.required);
-    companyId = new FormControl('', Validators.required);
-    details = new FormControl('', Validators.required);
     public typeOperations: string[] = ['+', '*', '%'];
     public editRow: number = undefined;
 
@@ -43,10 +39,10 @@ export class RecruitmentEditComponent implements OnInit {
     ngOnInit() {
         this.countLoading = 0;
         this.addRecruitmentForm = this.formBuilder.group({
-            companyId: this.companyId,
-            number: this.number,
-            date: this.date,
-            details: this.details
+            companyId: new FormControl('', Validators.required),
+            number: new FormControl('', Validators.required),
+            date: new FormControl('', Validators.required),
+            details: ''
         });
         let recruitmentId;
         if (this.route.snapshot.url.length > 1) {
@@ -58,8 +54,9 @@ export class RecruitmentEditComponent implements OnInit {
             this.dataService._getOne({ _id: recruitmentId }).subscribe(
                 data => {
                     this.recruitment = data;
-                    //this.addRecruitmentForm.setValue({number: this.recruitment.number, details: this.recruitment.details});
-                    this.addRecruitmentForm.patchValue(this.recruitment);
+                    this.addRecruitmentForm.setValue({number: this.recruitment.number, date: this.recruitment.date , 
+                        companyId: this.recruitment.companyId , details: this.recruitment.details});
+                    //this.addRecruitmentForm.patchValue(this.recruitment);
                 },
                 error => console.log(error),
                 () => this.countLoading++
@@ -67,17 +64,18 @@ export class RecruitmentEditComponent implements OnInit {
             this._title = "Редагувати документ";
             this._title_button = "Зберегти";
         } else {
-            this.recruitment = { _id: '', number: '', date: null, companyId: null, details: [] };
+            this.recruitment = new Recruitment();
             this._title = "Створити документ";
             this._title_button = "Створити";
             this.isEditing = false;
             this.countLoading++;
+            this.editRow = 0;
         }
 
         this.typesChargesService._get().subscribe(
             data => {
                 this.typesCharges = data;
-                //this.typesCharges.unshift({_id: '', name: ''});
+                this.typesCharges.unshift({});
             },
             error => console.log(error),
             () => this.countLoading++
@@ -86,7 +84,7 @@ export class RecruitmentEditComponent implements OnInit {
         this.individualsService._get().subscribe(
             data => {
                 this.individuals = data;
-                //this.individuals.unshift({_id: '', fio : ''});
+                this.individuals.unshift({});
             },
             error => console.log(error),
             () => this.countLoading++
@@ -95,6 +93,7 @@ export class RecruitmentEditComponent implements OnInit {
         this.companiesService._get().subscribe(
             data => {
                 this.companies = data;
+                this.companies.unshift({});
             },
             error => console.log(error),
             () => this.countLoading++
@@ -103,6 +102,7 @@ export class RecruitmentEditComponent implements OnInit {
         this.positionsService._get().subscribe(
             data => {
                 this.positions = data;
+                this.positions.unshift({});
             },
             error => console.log(error),
             () => this.countLoading++
@@ -111,6 +111,7 @@ export class RecruitmentEditComponent implements OnInit {
         this.typeBudgetsService._get().subscribe(
             data => {
                 this.typeBudgets = data;
+                this.typeBudgets.unshift({});
             },
             error => console.log(error),
             () => this.countLoading++
@@ -118,14 +119,15 @@ export class RecruitmentEditComponent implements OnInit {
     }
 
     saveRecruitment() {
+        console.log(this.recruitment);
         if (!this.isEditing) {
             this.dataService._add(this.addRecruitmentForm.value).subscribe(
                 res => {
                     const newPosition = res;
                     //this.recruitments.push(newPosition);
                     this.addRecruitmentForm.reset();
-                    this.toast.setMessage('item added successfully.', 'success');
-                    this.router.navigate(['/main/positions']);
+                    this.toast.setMessage('recruitments added successfully.', 'success');
+                    this.router.navigate(['/main/recruitments']);
                 },
                 error => console.log(error)
             );
@@ -165,12 +167,9 @@ export class RecruitmentEditComponent implements OnInit {
         this.router.navigate(['/main/recruitments']);
     }
 
-    getDate(date: number) {
-        return new Date(date).toISOString().substring(0, 10);
-    }
-
     editDetail($event, index: number, field: string) {
         let tempValue;
+        console.log($event.target.value);
         switch (field) {
             case "individualId":
                 tempValue = this.individuals[$event.target.options.selectedIndex];
@@ -190,9 +189,11 @@ export class RecruitmentEditComponent implements OnInit {
             case "individualId":
                 tempValue = this.individuals[$event.target.options.selectedIndex];
                 break;
+            case "date_receipt":
+                tempValue = $event.target.value;
+                break;
         }
         this.recruitment.details[index][field] = tempValue;
-        console.log(this.recruitment);
     }
 
     enableDetailEditing(i: number) {
@@ -211,6 +212,18 @@ export class RecruitmentEditComponent implements OnInit {
         }
         this.recruitment.details[index].charges[iT][field] = tempValue;
 
-        console.log(this.recruitment);
     }
+
+    changeCompany($event){
+        this.addRecruitmentForm.patchValue({companyId: this.companies[$event.target.options.selectedIndex]});
+    }
+
+    deleteDetailRecruitment(index: number){
+        this.recruitment.details.splice(index, 1);
+    }
+
+    addDetailRecruitment(){
+        this.recruitment.details.push(new RecruitmentDetails());
+        this.editRow = this.recruitment.details.length-1;
+    }    
 }

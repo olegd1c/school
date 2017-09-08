@@ -4,10 +4,11 @@ const positionSchema = new mongoose.Schema({
     name: String,
     typeChargeIds: [{type: mongoose.Schema.Types.ObjectId, ref: 'TypeCharge'}],
     createdAt: {
-        type: Number,
+        type: Date,
+        default: new Date()
     },
     updatedAt: {
-        type: Number,
+        type: Date,
         default: null
     },
 });

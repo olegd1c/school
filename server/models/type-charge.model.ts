@@ -7,10 +7,11 @@ const typeChargeSchema = new mongoose.Schema({
       },
     typeOperation: String,
     createdAt: {
-        type: Number,
+        type: Date,
+        default: new Date()
     },
     updatedAt: {
-        type: Number,
+        type: Date,
         default: null
     },
 });

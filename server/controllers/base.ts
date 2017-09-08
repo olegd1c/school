@@ -22,7 +22,7 @@ abstract class BaseCtrl {
     insert = (req, res) => {
         console.log(req.body);
         const obj = new this.model(req.body);
-        obj.createdAt = new Date().getTime();
+        //obj.createdAt = new Date().getTime();
         console.log(obj);
         obj.save((err, item) => {
             if (err) { return console.error(err); }
@@ -44,7 +44,7 @@ abstract class BaseCtrl {
 
     // Update by id
     update = (req, res) => {
-        req.body.updatedAt = new Date().getTime();
+        req.body.updatedAt = new Date();
        console.log(req.body);        
         this.model.findOneAndUpdate({ _id: req.params.id }, {$set: req.body}, (err, obj) => {
             if (err) { return console.error(err); }

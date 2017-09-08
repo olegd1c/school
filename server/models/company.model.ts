@@ -5,10 +5,11 @@ const companySchema = new mongoose.Schema({
     name_full: String,
     address: String,
     createdAt: {
-        type: Number,
+        type: Date,
+        default: new Date()
     },
     updatedAt: {
-        type: Number,
+        type: Date,
         default: null
     },
 });

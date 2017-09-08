@@ -13,10 +13,11 @@ const timeSheetSchema = new mongoose.Schema({
     employees: [ employeeSchema ],
     total: Number,
     createdAt: {
-        type: Number,
+        type: Date,
+        default: new Date()
     },
     updatedAt: {
-        type: Number,
+        type: Date,
         default: null
     },
 });

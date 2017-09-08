@@ -5,27 +5,39 @@ import { Company } from '@app/models/company';
 import { TypeCharge } from '@app/models/type-charge';
 import { TypeBudget } from '@app/models/type-budget';
 
-export interface Charge{
-    typeChargeId: TypeCharge;
-    count: number;
+export class Charge{
+    typeChargeId: TypeCharge = undefined;
+    count: number = undefined;
+
+    constructor() {
+        
+    }    
 }
 
-export interface RecruitmentDetails{
-    date_receipt: number;
-    date_dismissal: number;
-    positionId: Position;
-    individualId: Individual;
-    salary: number;
-    rate: number;
-    main_work: string;
-    typeBudgetId: TypeBudget;
-    charges: Charge[];
+export class RecruitmentDetails{
+    date_receipt: number = undefined;
+    date_dismissal: number=undefined;
+    positionId: Position=undefined;
+    individualId: Individual=undefined;
+    salary: number=undefined;
+    rate: number=undefined;
+    main_work: string=undefined;
+    typeBudgetId: TypeBudget=undefined;
+    charges: Charge[]=[new Charge()];
+    
+    constructor() {
+
+    }
 }
 
-export interface Recruitment{
-    _id:string;
-    number: String;
-    date: number;
-    companyId: Company;
-    details: RecruitmentDetails[]
+export class Recruitment{
+    _id:string = undefined;
+    number: String = undefined;
+    date: number = undefined;
+    companyId: Company = undefined;
+    details: RecruitmentDetails[] = [new RecruitmentDetails()];
+
+    constructor() {
+
+    }
 }

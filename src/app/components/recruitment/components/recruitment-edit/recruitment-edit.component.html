@@ -2,70 +2,71 @@
     <h4 class="card-header">{{_title}} </h4>
     <div class="card-block" *ngIf="countLoading == loadingTotal">
         <container>
-            <form class="form-inline" [formGroup]="addRecruitmentForm" (ngSubmit)="addRecruitment()" style="text-align:center">
+            <form class="form-inline" [formGroup]="addRecruitmentForm" (ngSubmit)="saveRecruitment()" style="text-align:center">
                 <row>
                     <label for="companyId">Організація</label>
-                    <select>
-                        <option *ngFor="let itemC of companies" [value]="itemC._id" [selected]="recruitment.companyId._id == itemC._id">{{itemC.name}}</option>
-                    </select>                    
-                    <!--input class="form-control" [(ngModel)]="recruitment.companyId" type="text" name="companyId" formControlName="companyId"
-                        value="{{recruitment.companyId?.name}}" placeholder="Організація"-->
+                    <select class="form-control" [(ngModel)]="companyId" formControlName="companyId">
+                        <option *ngFor="let itemC of companies" [value]="itemC._id" [selected]="companyId?._id == itemC._id">{{itemC.name}}</option>
+                    </select>
                 </row>
                 <row>
                     <label for="number">Номер документа</label>
-                    <input class="form-control" [(ngModel)]="recruitment.number" type="text" name="number" formControlName="number" placeholder="Номер документа">
+                    <input class="form-control" [(ngModel)]="number" type="text" name="number" formControlName="number" placeholder="Номер документа">
                 </row>
                 <row>
                     <label for="number">Дата документа</label>
-                    <input class="form-control" [(ngModel)]="recruitment.date" type="text" name="date" formControlName="date" placeholder="Дата документа">
+                    <input class="form-control" [(ngModel)]="date" type="date" name="date" formControlName="date" placeholder="Дата документа">
                 </row>
                 <row><h4>Деталі</h4></row>                
+                <button class="btn btn-sm btn-danger" (click)="addDetailRecruitment()">
+                    <i class="fa fa-plus">Добавити</i>
+                </button>
+                <row>
+                    <column md=1>
+                        <h3>№</h3>
+                    </column>
+                    <column md=1>
+                        <h3>ФИО</h3>
+                    </column>
+                    <column md=1>
+                        <h3>Посада</h3>
+                    </column>
+                    <column md=1>
+                        <h3>Дата Прийому</h3>
+                    </column>
+                    <column md=1>
+                        <h3>Дата звільнення</h3>
+                    </column>
+                    <column md=1>
+                        <h3>Оклад</h3>
+                    </column>
+                    <column md=1>
+                        <h3>Ставка</h3>
+                    </column>
+                    <column md=1>
+                        <h3>Місце роботи</h3>
+                    </column>
+                    <column md=1>
+                        <h3>Бюджет</h3>
+                    </column>
+                    <column md=1>
+                        <h3>Види нарахувань</h3>
+                    </column>
+                    <column md=1>
+                        <h3>Дії</h3>
+                    </column>
+                </row>                
                 <div *ngFor="let detail of recruitment.details; let i = index">
                     <div *ngIf="editRow == undefined">
                         <row>
                             <column md=1>
-                                <h3>№</h3>
-                            </column>
-                            <column md=1>
-                                <h3>ФИО</h3>
-                            </column>
-                            <column md=1>
-                                <h3>Посада</h3>
-                            </column>
-                            <column md=1>
-                                <h3>Дата Прийому</h3>
-                            </column>
-                            <column md=1>
-                                <h3>Дата звільнення</h3>
-                            </column>
-                            <column md=1>
-                                <h3>Оклад</h3>
-                            </column>
-                            <column md=1>
-                                <h3>Ставка</h3>
-                            </column>
-                            <column md=1>
-                                <h3>Місце роботи</h3>
-                            </column>
-                            <column md=1>
-                                <h3>Бюджет</h3>
-                            </column>
-                            <column md=1>
-                                <h3>Види нарахувань</h3>
-                            </column>
-                            <column md=1>
-                                <h3>Дії</h3>
-                            </column>                            
-                        </row>
-                        <row *ngFor="let detail of recruitment.details; let i = index">
-                            <column md=1>
                                 {{i+1}}
                             </column>
                             <column md=1>
-                                {{detail.individualId.fio}}
+                                {{detail.individualId?.fio}}
                             </column>
                             <column md=1>
-                                {{detail.positionId.name}}
+                                {{detail.positionId?.name}}
                             </column>
                             <column md=1>
                                 {{detail.date_receipt | date: 'dd/MM/yyyy'}}
@@ -83,11 +84,11 @@
                                 {{detail.mainWork}}
                             </column>
                             <column md=1>
-                                {{detail.typeBudgetId.name}}
+                                {{detail.typeBudgetId?.name}}
                             </column>
                             <column md=1>
                                 <span *ngFor="let type of detail.charges">
-                                    {{type.typeChargeId.name}},
+                                    {{type.typeChargeId?.name}},
                                 </span>
                             </column>
                             <column md=1>
@@ -108,44 +109,45 @@
                         <row>
                             <label>Співробітник</label>
                             <select (change)="editDetail($event, i, 'individualId')">
-                                <option *ngFor="let itemI of individuals" [value]="itemI" [selected]="detail.individualId._id == itemI._id">{{itemI.fio}}</option>
+                                <option *ngFor="let itemI of individuals" [value]="itemI" [selected]="detail.individualId?._id == itemI._id">{{itemI.fio}}</option>
                             </select>
                         </row>
                         <row>
                             <label>Посада</label>
                             <select (change)="editDetail($event, i, 'positionId')">
-                                <option *ngFor="let itemP of positions" [value]="itemP._id" [selected]="detail.positionId._id == itemP._id">{{itemP.name}}</option>
+                                <option *ngFor="let itemP of positions" [value]="itemP._id" [selected]="detail.positionId?._id == itemP._id">{{itemP.name}}</option>
                             </select>
                         </row>
                         <row>
                             <label for="number">Дата прийому</label>
-                            <input class="form-control" type="date"
-                                value="{{getDate(detail.date_receipt)}}" placeholder="Дата прийому">
+                            <input class="form-control" type="date" [(ngModel)] = "details[i].date_receipt"
+                                value="{{detail.date_receipt}}" placeholder="Дата прийому">
                         </row>
                         <row>
-                            <label for="number">Дата прийому</label>
-                            <input class="form-control" type="date"
-                                value="{{getDate(detail.date_dismissal)}}" placeholder="Дата звільнення">
+                            <label for="number">Дата звільнення</label>
+                            <input class="form-control" type="date" [(ngModel)] = "details[i].date_dismissal"
+                                value="{{detail.date_dismissal}}" placeholder="Дата звільнення">
                         </row>
                         <row>
                             <label for="number">Оклад</label>
-                            <input class="form-control" type="number"
-                                value="{{detail.salary}}" placeholder="Оклад">
+                            <input class="form-control" type="number" [(ngModel)] = "details[i].salary"
+                                placeholder="Оклад">
                         </row>
                         <row>
                             <label for="number">Ставка (шт.)</label>
-                            <input class="form-control" type="number" step="0.01"
+                            <input class="form-control" type="number" step="0.01" [(ngModel)] = "details[i].rate"
                                 value="{{detail.rate}}" placeholder="Ставка (шт.)">
                         </row>
                         <row>
                             <label for="number">Місце роботи</label>                  
-                            <input class="form-control" type="text"
+                            <input class="form-control" type="text" [(ngModel)] = "details[i].mainWork"
                                 value="{{detail.mainWork}}" placeholder="Місце роботи">
                         </row>
                         <row>
                             <label for="number">Тип бюджету</label>                  
                             <select (change)="editDetail($event, i, 'positionId')">
-                                <option *ngFor="let itemTB of typeBudgets" [value]="itemTB._id" [selected]="detail.typeBudgetId._id == itemTB._id">{{itemTB.name}}</option>
+                                <option *ngFor="let itemTB of typeBudgets" [value]="itemTB._id" 
+                                    [selected]="detail.typeBudgetId?._id == itemTB._id">{{itemTB.name}}</option>
                             </select>
                         </row>
                         <row><h4>Типи нарахувань</h4></row>
@@ -163,7 +165,8 @@
                         <row *ngFor="let type of detail.charges; let iT = index" >
                             <column md=2>
                                 <select (change)="editTypeCharges($event, i, iT, 'typeChargeId')">
-                                    <option *ngFor="let item of typesCharges" [value]="item._id" [selected]="type.typeChargeId._id == item._id">{{item.name}}</option>
+                                    <option *ngFor="let item of typesCharges" [value]="item._id"
+                                        [selected]="type.typeChargeId?._id == item._id">{{item.name}}</option>
                                 </select>
                             </column>
                             <column md=3>
@@ -184,10 +187,13 @@
                         </row>
                     </div>
                 </div>
-                <button class="btn btn-primary" type="submit" [disabled]="!addRecruitmentForm.valid">
+                <br>
+                <button class="btn btn-primary" type="submit"  [disabled]="!addRecruitmentForm.valid">
                     <i class="fa fa-floppy-o"></i>{{_title_button}}
                 </button>
             </form>
         </container>
     </div>
+
+    <pre>{{addRecruitmentForm.value | json}}</pre>
 </container>
