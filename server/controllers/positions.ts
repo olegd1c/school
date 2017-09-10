@@ -19,7 +19,6 @@ export default class PositionsCtrl extends BaseCtrl {
     insert = (req, res) => {
         console.log(req.body);
         const obj = new this.model(req.body);
-        obj.createdAt = new Date().getTime();
         obj.save((err, item) => {
             if (err) { return console.error(err); }
             res.status(200).json(item);

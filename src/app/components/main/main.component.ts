@@ -39,7 +39,16 @@ export class MainComponent implements OnInit {
                     name: 'Види бюджету',
                     permission: ['admin'],
                     routerLink: 'main/type-budgets'
-                },                
+                },
+                {
+                    name: 'Види зайнятості',
+                    permission: ['admin'],
+                    routerLink: 'main/type-works'
+                }, {
+                    name: 'Одиниці виміру',
+                    permission: ['admin'],
+                    routerLink: 'main/units'
+                },
             ]
         },
         {

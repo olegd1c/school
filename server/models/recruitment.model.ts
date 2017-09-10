@@ -7,7 +7,7 @@ const ChargeSchema = new mongoose.Schema({
 
 const recruitmentDetailsSchema = new mongoose.Schema({
     positionId: {type: mongoose.Schema.Types.ObjectId, ref: 'Position'},
-    individualId: {type: mongoose.Schema.Types.ObjectId, ref: 'Individual'},    
+    individualId: {type: mongoose.Schema.Types.ObjectId, ref: 'Individual'},
     date_receipt: Date,
     date_dismissal: {
         type: Date,
@@ -16,12 +16,8 @@ const recruitmentDetailsSchema = new mongoose.Schema({
     salary: Number,
     rate: Number,
     charges: [ChargeSchema],
-    mainWork: {
-        type: [
-            { type: String, enum: [ 'основне', 'по сумісництву' ] }],
-        default: 'основне'
-        },
-    typeBudgetId: {type: mongoose.Schema.Types.ObjectId, ref: 'TypeBudget'},   
+    mainWorkId: {type: mongoose.Schema.Types.ObjectId, ref: 'TypeWork'},
+    typeBudgetId: {type: mongoose.Schema.Types.ObjectId, ref: 'TypeBudget'},
 });
 
 const recruitmentSchema = new mongoose.Schema({

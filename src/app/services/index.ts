@@ -3,5 +3,7 @@ export * from './companies.service';
 export * from './individuals.service';
 export * from './types-charges.service';
 export * from './positions.service';
-export * from './recruitments.service';
 export * from './types-budgets.service';
+export * from './types-works.service';
+export * from './recruitments.service';
+export * from './units.service';

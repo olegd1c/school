@@ -1,16 +1,16 @@
-import { OpaqueToken } from "@angular/core";
+import { OpaqueToken } from '@angular/core';
 
-export let APP_CONFIG = new OpaqueToken("app.config");
+export let APP_CONFIG = new OpaqueToken('app.config');
 
 export interface ILanguage{
-  lang:string;
-  value:string
+  lang: string;
+  value: string;
 }
 
-const LANGS: ILanguage[] = 
-      [{lang:'uk',value:'Українська'},
-        {lang:'ru',value:'Русский'},
-        {lang:'en',value:'English'}];
+const LANGS: ILanguage[] =
+      [{lang: 'uk', value: 'Українська'},
+        {lang: 'ru', value: 'Русский'},
+        {lang: 'en', value: 'English'}];
 
 const LANGS_LIST: string[] = ['uk', 'ru', 'en'];
 
@@ -21,7 +21,7 @@ export interface IAppConfig {
   apiUrl: string;
 }
 
-const API_URL: string = '/api/';
+const API_URL = '/api/';
 
 export const AppConfig: IAppConfig = {
   langs: LANGS,

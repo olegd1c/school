@@ -10,6 +10,7 @@ export default class RecruitmentsCtrl extends BaseCtrl {
         .populate('companyId')
         .populate('details.individualId')
         .populate('details.positionId')
+        .populate('details.typeWorkId')
         .populate('details.charges.typeChargeId')
         .exec(function(err, positions) {
             if(err) return console.error(err);
@@ -38,7 +39,8 @@ export default class RecruitmentsCtrl extends BaseCtrl {
         .populate('details.individualId')
         .populate('details.positionId')
         .populate('details.charges.typeChargeId')
-        .populate('details.typeBudgetId')        
+        .populate('details.typeBudgetId')
+        .populate('details.mainWorkId')
         .exec(function(err, position) {
             if(err) return console.error(err);
             console.log(position);

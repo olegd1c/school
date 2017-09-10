@@ -6,6 +6,8 @@ import TypeCharge from './controllers/type-charge';
 import PositionsCtrl from './controllers/positions';
 import RecruitmentsCtrl from './controllers/recruitments';
 import TypeBudgetCtrl from './controllers/type-budget';
+import TypeWorkCtrl from './controllers/type-work';
+import UnitCtrl from './controllers/unit';
 
 export default function setRoutes(app) {
 
@@ -15,6 +17,8 @@ export default function setRoutes(app) {
     const positions = new PositionsCtrl();
     const recruitments = new RecruitmentsCtrl();
     const typeBudgets = new TypeBudgetCtrl();
+    const typeWorks = new TypeWorkCtrl();
+    const units = new UnitCtrl();
 
     // APIs
     app.route('/api/companies').get(companies.getAll);
@@ -31,12 +35,12 @@ export default function setRoutes(app) {
     app.route('/api/individuals/:id').put(individuals.update);
     app.route('/api/individuals/:id').delete(individuals.delete);
 
-    app.route('/api/types-charges').get(typeCharges.getAll);
-    app.route('/api/types-charges/count').get(typeCharges.count);
-    app.route('/api/types-charges').post(typeCharges.insert);
-    app.route('/api/types-charges/:id').get(typeCharges.get);
-    app.route('/api/types-charges/:id').put(typeCharges.update);
-    app.route('/api/types-charges/:id').delete(typeCharges.delete);
+    app.route('/api/type-charges').get(typeCharges.getAll);
+    app.route('/api/type-charges/count').get(typeCharges.count);
+    app.route('/api/type-charges').post(typeCharges.insert);
+    app.route('/api/type-charges/:id').get(typeCharges.get);
+    app.route('/api/type-charges/:id').put(typeCharges.update);
+    app.route('/api/type-charges/:id').delete(typeCharges.delete);
 
     app.route('/api/positions').get(positions.getAll);
     app.route('/api/positions/count').get(positions.count);
@@ -58,4 +62,18 @@ export default function setRoutes(app) {
     app.route('/api/recruitments/:id').get(recruitments.get);
     app.route('/api/recruitments/:id').put(recruitments.update);
     app.route('/api/recruitments/:id').delete(recruitments.delete);
+
+    app.route('/api/type-works').get(typeWorks.getAll);
+    app.route('/api/type-works/count').get(typeWorks.count);
+    app.route('/api/type-works').post(typeWorks.insert);
+    app.route('/api/type-works/:id').get(typeWorks.get);
+    app.route('/api/type-works/:id').put(typeWorks.update);
+    app.route('/api/type-works/:id').delete(typeWorks.delete);
+
+    app.route('/api/units').get(units.getAll);
+    app.route('/api/units/count').get(units.count);
+    app.route('/api/units').post(units.insert);
+    app.route('/api/units/:id').get(units.get);
+    app.route('/api/units/:id').put(units.update);
+    app.route('/api/units/:id').delete(units.delete);
 }

@@ -7,16 +7,15 @@ import { AppComponent } from './app.component';
 import { MainComponent } from './components/main/main.component';
 import { ToastComponent } from './components/toast/toast.component';
 import { CompaniesService, IndividualsService, HttpService, TypesChargesService, PositionsService,
-    TypeBudgetsService, RecruitmentsService
+    TypeBudgetsService, RecruitmentsService, TypesWorksService, UnitsService
 } from './services';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import 'hammerjs';
 // Angular Material
-//import { MaterialModule } from '@angular/material';
+// import { MaterialModule } from '@angular/material';
 import { LoginComponent } from './components/login/login.component';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import {SelectModule} from 'ng-select';
 
 import { CompaniesComponent } from '@app/components/companies/companies.component';
 import { IndividualsComponent } from '@app/components/individuals/individuals.component';
@@ -32,7 +31,8 @@ import { RecruitmentComponent } from '@app/components/recruitment/recruitment.co
 import { RecruitmentItemComponent } from '@app/components/recruitment/components/recruitment-item/recruitment-item.component';
 import { RecruitmentEditComponent } from '@app/components/recruitment/components/recruitment-edit/recruitment-edit.component';
 import { TypeBudgetsComponent } from '@app/components/type-budgets/type-budgets.component';
-
+import { TypeWorksComponent } from '@app/components/type-works/type-works.component';
+import { UnitsComponent } from '@app/components/units/units.component';
 
 const routes: Routes = [
     { path: '',  component: LoginComponent, data: { title: 'entracne'} },
@@ -59,10 +59,14 @@ const routes: Routes = [
                         data: {permissions: ['admin'], title: 'positions'}, },
                     {path: 'recruitment-edit/:id', component: RecruitmentEditComponent,
                         data: {permissions: ['admin'], title: 'recruitment-edit'}, },
-                    {path: 'recruitment-edit', component: RecruitmentEditComponent,
-                        data: {permissions: ['admin'], title: 'recruitment-edit'}, },                          
+                    {path: 'recruitment-create', component: RecruitmentEditComponent,
+                        data: {permissions: ['admin'], title: 'recruitment-create'}, },
                     {path: 'type-budgets', component: TypeBudgetsComponent,
                         data: {permissions: ['admin'], title: 'type-budgets'}, },
+                    {path: 'type-works', component: TypeWorksComponent,
+                            data: {permissions: ['admin'], title: 'type-works'}, },
+                    {path: 'units', component: UnitsComponent,
+                            data: {permissions: ['admin'], title: 'units'}, },
                 ]
 },
     // otherwise redirect to home
@@ -86,6 +90,8 @@ const routes: Routes = [
         RecruitmentComponent,
         RecruitmentItemComponent,
         TypeBudgetsComponent,
+        TypeWorksComponent,
+        UnitsComponent,
         RecruitmentEditComponent
     ],
     imports: [
@@ -96,8 +102,7 @@ const routes: Routes = [
         ReactiveFormsModule,
         BrowserAnimationsModule,
         RouterModule.forRoot(routes),
-        BootstrapGridModule,
-        SelectModule
+        BootstrapGridModule
     ],
     providers: [
         FormBuilder,
@@ -107,6 +112,8 @@ const routes: Routes = [
         PositionsService,
         TypeBudgetsService,
         RecruitmentsService,
+        TypesWorksService,
+        UnitsService,
         ToastComponent
     ],
     bootstrap: [AppComponent],

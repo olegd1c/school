@@ -18,13 +18,13 @@ const individualSchema = new mongoose.Schema({
 });
 
 individualSchema.pre('save', function (next) {
-    this.fio = this.first_name + ' ' + this.last_name.substring(0, 1) + '. ' + this.father_name.substring(0, 1) + '. ';
+    this.fio = this.last_name + ' ' + this.first_name.substring(0, 1) + '. ' + this.father_name.substring(0, 1) + '. ';
     next();
 });
 
 individualSchema.pre('findOneAndUpdate', function () {
-    let obj = this.getUpdate()['$set'];
-    let fio = obj.last_name + ' ' + obj.first_name.substring(0, 1) + '. ' + obj.father_name.substring(0, 1) + '. ';
+    const obj = this.getUpdate()['$set'];
+    const fio = obj.last_name + ' ' + obj.first_name.substring(0, 1) + '. ' + obj.father_name.substring(0, 1) + '. ';
     this.findOneAndUpdate({}, { $set: { fio: fio } });
 });
 
