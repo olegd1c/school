@@ -11,8 +11,8 @@ export class Charge{
 }
 
 export class RecruitmentDetails{
-    date_receipt: Date = undefined;
-    date_dismissal: Date = undefined;
+    dateReceipt: Date = undefined;
+    dateDismissal: Date = undefined;
     positionId: Position = undefined;
     individualId: Individual = undefined;
     salary: number= undefined;
@@ -22,7 +22,6 @@ export class RecruitmentDetails{
     charges: Charge[] = [new Charge()];
 
     constructor() {
-
     }
 }
 

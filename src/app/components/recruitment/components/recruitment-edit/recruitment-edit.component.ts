@@ -57,14 +57,6 @@ export class RecruitmentEditComponent implements OnInit {
                     this.createForm();
                     this.addRecruitmentForm.patchValue({number: recruitment.number, companyId: recruitment.companyId,
                         date: recruitment.date, details: recruitment.details});
-                    /*this.addRecruitmentForm.controls['number'].setValue(recruitment.number);
-                    this.addRecruitmentForm.controls['date'].setValue(recruitment.date);
-                    this.addRecruitmentForm.controls['companyId'].setValue(recruitment.companyId);
-                    this.addRecruitmentForm.controls['details'].setValue(recruitment.details);
-*/
-console.log( this.addRecruitmentForm.controls.companyId.value);
-                    //this.addRecruitmentForm.setValue(this.recruitment);
-                                        // this.addRecruitmentForm.patchValue({number: this.recruitment.number});
                 },
                 error => console.log(error),
                 () => this.countLoading++
@@ -137,8 +129,8 @@ console.log( this.addRecruitmentForm.controls.companyId.value);
 
     initDetail(): any {
         return this._fb.group({
-            date_receipt: [''],
-            date_dismissal: [''],
+            dateReceipt: [''],
+            dateDismissal: [''],
             positionId: [''],
             individualId: [''],
             salary: [''],
@@ -223,9 +215,12 @@ console.log( this.addRecruitmentForm.controls.companyId.value);
             case 'mainWorkId':
                 tempValue = this.typeWorks[$event.target.options.selectedIndex];
                 break;
-            case 'date_receipt':
+            case 'dateReceipt':
                 tempValue = $event.target.value;
                 break;
+            case 'dateDismissal':
+                tempValue = $event.target.value;
+                break;                
         }
         console.log(tempValue);
         const control = <FormArray>this.addRecruitmentForm.controls['details'];
@@ -264,9 +259,9 @@ console.log( this.addRecruitmentForm.controls.companyId.value);
 
     private createForm() {
         this.addRecruitmentForm = this._fb.group({
-        companyId: new FormControl('companyId', Validators.required),
-        number: new FormControl('number', Validators.required),
-        date: new FormControl('date', Validators.required),
+        companyId: new FormControl('', Validators.required),
+        number: new FormControl('', Validators.required),
+        date: new FormControl('', Validators.required),
         details: this._fb.array([
             this.initDetail(),
             ])

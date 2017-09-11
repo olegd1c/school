@@ -1,5 +1,6 @@
 import Recruitment from '../models/recruitment.model';
 import BaseCtrl from './base';
+let moment = require('moment');
 
 export default class RecruitmentsCtrl extends BaseCtrl {
     model = Recruitment;
@@ -35,16 +36,25 @@ export default class RecruitmentsCtrl extends BaseCtrl {
     // Get by id
     get = (req, res) => {
         this.model.findOne({ _id: req.params.id })
-        .populate('companyId')
+        //.populate('companyId')
         .populate('details.individualId')
         .populate('details.positionId')
         .populate('details.charges.typeChargeId')
         .populate('details.typeBudgetId')
         .populate('details.mainWorkId')
-        .exec(function(err, position) {
+        .exec(function(err, recruitment) {
             if(err) return console.error(err);
-            console.log(position);
-            res.status(200).json(position);
+            let data = JSON.parse(JSON.stringify(recruitment));
+            let d = data.date;
+            data.date = moment(d).format('YYYY-MM-DD');    
+            data.details.forEach(function(detail) {
+                detail.dateReceipt = moment(detail.dateReceipt).format('YYYY-MM-DD');
+                if(detail.dateDismissal) {
+                    detail.dateDismissal = moment(detail.dateDismissal).format('YYYY-MM-DD');
+                }
+              });
+
+            res.status(200).json(data);
         });
     };
 }

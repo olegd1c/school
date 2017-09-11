@@ -6,25 +6,20 @@
                 style="text-align:center" novalidate>
                 <row>
                     <label for="companyId">Організація</label>
-
                     <select class="form-control" formControlName="companyId">
                         <option *ngFor="let itemC of companies" [value]="itemC._id"
-                            [selected]="addRecruitmentForm.value?.companyId._id == itemC._id">
+                            [selected]="addRecruitmentForm.controls.companyId.value._id == itemC._id">
                             {{itemC.name}}
                         </option>
                     </select>
                 </row>
                 <row>
-                {{addRecruitmentForm.value?.numer}}
                     <label for="number">Номер документа</label>
-                    <input class="form-control" type="text" name="number" formControlName="number" placeholder="Номер документа" 
-                        
-                    >
+                    <input class="form-control" type="text" name="number" formControlName="number" placeholder="Номер документа">
                 </row>
                 <row>
                     <label for="number">Дата документа</label>
-                    <input class="form-control" type="date" name="date" formControlName="date" placeholder="Дата документа"
-                        >
+                    <input class="form-control" type="date" name="date" formControlName="date" placeholder="Дата документа">
                 </row>
                 <row>
                     <h4>Деталі</h4>
@@ -76,33 +71,33 @@
                                         {{i+1}}
                                     </column>
                                     <column md=1>
-                                        {{detail.individualId?.fio}}
+                                        {{detail.controls.individualId.value.fio}}
                                     </column>
                                     <column md=1>
-                                        {{detail.positionId?.name}}
+                                        {{detail.controls.positionId.value.name}}
                                     </column>
                                     <column md=1>
-                                        {{detail.date_receipt | date: 'dd/MM/yyyy'}}
+                                        {{detail.controls.dateReceipt.value}}
                                     </column>
                                     <column md=1>
-                                        {{detail.date_dismissal | date: 'dd/MM/yyyy'}}
+                                        {{detail.controls.dateDismissal.value}}
                                     </column>
                                     <column md=1>
-                                        {{detail.salary}}
+                                        {{ detail.controls.salary.value }}
                                     </column>
                                     <column md=1>
-                                        {{detail.rate}}
+                                        {{detail.controls.rate.value}}
                                     </column>
                                     <column md=1>
-                                        {{detail.mainWork}}
+                                        {{detail.controls.mainWorkId.value.name}}
                                     </column>
                                     <column md=1>
-                                        {{detail.typeBudgetId?.name}}
+                                        {{detail.controls.typeBudgetId.value.name}}
                                     </column>
                                     <column md=1>
-                                        <span *ngFor="let type of detail.charges">
-                                    {{type.typeChargeId?.name}},
-                                </span>
+                                        <span *ngFor="let type of detail.controls.charges.value">
+                                            {{type.controls.typeChargeId?.value?.name}},
+                                        </span>
                                     </column>
                                     <column md=1>
                                         <button class="btn btn-sm btn-warning" (click)="enableDetailEditing(i)">
@@ -123,7 +118,7 @@
                                     <label>Співробітник</label>
                                     <select (change)="editDetail($event, i, 'individualId')" formControlName="individualId">
                                         <option *ngFor="let itemI of individuals" [value]="itemI._id" 
-                                            [selected]="detail.individualId?._id == itemI._id">{{itemI.fio}}</option>
+                                            [selected]="detail.controls.individualId.value._id == itemI._id">{{itemI.fio}}</option>
                                     </select>
                                 </row>
                                 <row>
@@ -135,12 +130,12 @@
                                 </row>
                                 <row>
                                     <label for="number">Дата прийому</label>
-                                    <input class="form-control" type="date" formControlName="date_receipt" 
-                                        value="{{detail.date_receipt}}" placeholder="Дата прийому">
+                                    <input class="form-control" type="date" formControlName="dateReceipt" 
+                                        placeholder="Дата прийому">
                                 </row>
                                 <row>
                                     <label for="number">Дата звільнення</label>
-                                    <input class="form-control" type="date" formControlName="date_dismissal" value="{{detail.date_dismissal}}" placeholder="Дата звільнення">
+                                    <input class="form-control" type="date" formControlName="dateDismissal" placeholder="Дата звільнення">
                                 </row>
                                 <row>
                                     <label for="number">Оклад</label>

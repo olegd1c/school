@@ -1,4 +1,7 @@
 import * as mongoose from 'mongoose';
+require('mongoose-moment')(mongoose);
+var moment = require('moment');
+//let mongooseDate = require("mongoose-date");
 
 const ChargeSchema = new mongoose.Schema({
     typeChargeId: {type: mongoose.Schema.Types.ObjectId, ref: 'TypeCharge'},
@@ -8,8 +11,11 @@ const ChargeSchema = new mongoose.Schema({
 const recruitmentDetailsSchema = new mongoose.Schema({
     positionId: {type: mongoose.Schema.Types.ObjectId, ref: 'Position'},
     individualId: {type: mongoose.Schema.Types.ObjectId, ref: 'Individual'},
-    date_receipt: Date,
-    date_dismissal: {
+    dateReceipt: {
+        type: Date,
+        default: null
+    },
+    dateDismissal: {
         type: Date,
         default: null
     },
@@ -22,7 +28,10 @@ const recruitmentDetailsSchema = new mongoose.Schema({
 
 const recruitmentSchema = new mongoose.Schema({
     number: String,
-    date: Date,
+    date: {
+        type: Date,
+        default: null
+    },
     companyId: {type: mongoose.Schema.Types.ObjectId, ref: 'Company'},
     details: [recruitmentDetailsSchema],
     createdAt: {
@@ -34,6 +43,8 @@ const recruitmentSchema = new mongoose.Schema({
         default: null
     },
 });
+
+//recruitmentSchema.plugin(date);
 
 const Recruitments = mongoose.model('Recruitments', recruitmentSchema);
 
