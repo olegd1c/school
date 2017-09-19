@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { MainComponent } from './components/main/main.component';
 import { ToastComponent } from './components/toast/toast.component';
 import { CompaniesService, IndividualsService, HttpService, TypesChargesService, PositionsService,
-    TypeBudgetsService, RecruitmentsService, TypesWorksService, UnitsService
+    TypeBudgetsService, RecruitmentsService, TypesWorksService, UnitsService, TypePaymentsService, PaymentsService
 } from './services';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import 'hammerjs';
@@ -33,6 +33,9 @@ import { RecruitmentEditComponent } from '@app/components/recruitment/components
 import { TypeBudgetsComponent } from '@app/components/type-budgets/type-budgets.component';
 import { TypeWorksComponent } from '@app/components/type-works/type-works.component';
 import { UnitsComponent } from '@app/components/units/units.component';
+import { TypePaymentsComponent } from '@app/components/type-payments/type-payments.component';
+import { PaymentsComponent } from '@app/components/payments/payments.component';
+import { PaymentEditComponent } from '@app/components/payment-edit/payment-edit.component';
 
 const routes: Routes = [
     { path: '',  component: LoginComponent, data: { title: 'entracne'} },
@@ -64,9 +67,17 @@ const routes: Routes = [
                     {path: 'type-budgets', component: TypeBudgetsComponent,
                         data: {permissions: ['admin'], title: 'type-budgets'}, },
                     {path: 'type-works', component: TypeWorksComponent,
-                            data: {permissions: ['admin'], title: 'type-works'}, },
+                        data: {permissions: ['admin'], title: 'type-works'}, },
                     {path: 'units', component: UnitsComponent,
-                            data: {permissions: ['admin'], title: 'units'}, },
+                        data: {permissions: ['admin'], title: 'units'}, },
+                    {path: 'type-payments', component: TypePaymentsComponent,
+                        data: {permissions: ['admin'], title: 'type-payment'}, },
+                    {path: 'payments', component: PaymentsComponent,
+                        data: {permissions: ['admin'], title: 'payments'}, },
+                    {path: 'payment-edit/:id', component: PaymentEditComponent,
+                        data: {permissions: ['admin'], title: 'payment-edit'}, },
+                    {path: 'payment-create', component: PaymentEditComponent,
+                        data: {permissions: ['admin'], title: 'payment-create'}, },
                 ]
 },
     // otherwise redirect to home
@@ -92,7 +103,10 @@ const routes: Routes = [
         TypeBudgetsComponent,
         TypeWorksComponent,
         UnitsComponent,
-        RecruitmentEditComponent
+        RecruitmentEditComponent,
+        TypePaymentsComponent,
+        PaymentsComponent,
+        PaymentEditComponent
     ],
     imports: [
         BrowserModule,
@@ -114,6 +128,8 @@ const routes: Routes = [
         RecruitmentsService,
         TypesWorksService,
         UnitsService,
+        TypePaymentsService, 
+        PaymentsService,
         ToastComponent
     ],
     bootstrap: [AppComponent],

@@ -37,11 +37,12 @@ export default class RecruitmentsCtrl extends BaseCtrl {
     get = (req, res) => {
         this.model.findOne({ _id: req.params.id })
         //.populate('companyId')
-        .populate('details.individualId')
-        .populate('details.positionId')
-        .populate('details.charges.typeChargeId')
-        .populate('details.typeBudgetId')
-        .populate('details.mainWorkId')
+        //.populate('details.individualId')
+        //.populate('details.positionId')
+        //.populate('details.charges.typeChargeId')
+        //.populate('details.typeBudgetId')
+        //.populate('details.mainWorkId')
+        .populate('company')
         .exec(function(err, recruitment) {
             if(err) return console.error(err);
             let data = JSON.parse(JSON.stringify(recruitment));
@@ -53,7 +54,9 @@ export default class RecruitmentsCtrl extends BaseCtrl {
                     detail.dateDismissal = moment(detail.dateDismissal).format('YYYY-MM-DD');
                 }
               });
-
+              
+              console.log('company get');
+              console.log(data);
             res.status(200).json(data);
         });
     };

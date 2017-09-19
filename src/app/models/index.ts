@@ -6,3 +6,4 @@ export * from './recruitment';
 export * from './type-budget';
 export * from './type-work';
 export * from './unit';
+export * from './type-payment';

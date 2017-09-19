@@ -44,8 +44,13 @@ const recruitmentSchema = new mongoose.Schema({
     },
 });
 
-//recruitmentSchema.plugin(date);
+recruitmentSchema.virtual('company', {
+    ref: 'Company',
+    localField: '_id',
+    foreignField: 'name'
+  });
 
+const Charges = mongoose.model('Charges', ChargeSchema);
 const Recruitments = mongoose.model('Recruitments', recruitmentSchema);
 
 export default Recruitments;

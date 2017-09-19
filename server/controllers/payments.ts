@@ -1,13 +1,19 @@
-import Positions from '../models/position.model';
+import Positions from '../models/payment.model';
 import BaseCtrl from './base';
 
-export default class PositionsCtrl extends BaseCtrl {
+export default class PaymentsCtrl extends BaseCtrl {
     model = Positions;
 
     // Get all
     getAll = (req, res) => {
         this.model.find()
-        .populate('typeChargeIds')
+        .populate('companyId')
+        .populate('typeId')
+        .populate('details.individualId')
+        .populate('details.positionId')
+        .populate('details.charges.typeChargeId')
+        .populate('details.typeBudgetId')
+        .populate('details.mainWorkId')
         .exec(function(err, positions) {
             if(err) return console.error(err);
             console.log(positions);

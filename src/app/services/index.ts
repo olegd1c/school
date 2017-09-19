@@ -7,3 +7,5 @@ export * from './types-budgets.service';
 export * from './types-works.service';
 export * from './recruitments.service';
 export * from './units.service';
+export * from './payments.service';
+export * from './type-payments.service';

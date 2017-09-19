@@ -158,13 +158,13 @@
                 </div>
 
                 <!--row *ngFor="let type of position.typeChargeIds">
-                <select (change)="addTypeCharges($event)">
-                    <option *ngFor="let item of typesCharges" [value]="item._id" [selected]="type._id == item._id">{{item.name}}</option>
-                </select>
-                <button class="btn btn-sm btn-danger" (click)="deleteTypeCharge(type)">
-                    <i class="fa fa-trash"></i>
-                </button>
-            </row-->
+                    <select (change)="addTypeCharges($event)">
+                        <option *ngFor="let item of typesCharges" [value]="item._id" [selected]="type._id == item._id">{{item.name}}</option>
+                    </select>
+                    <button class="btn btn-sm btn-danger" (click)="deleteTypeCharge(type)">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </row-->
                 <row>
                     <select (change)="addTypeCharges($event)">
                     <option *ngFor="let item of typesCharges" [value]="item._id">{{item.name}}</option>

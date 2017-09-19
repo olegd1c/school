@@ -24,7 +24,7 @@
                 <row>
                     <h4>Деталі</h4>
                 </row>
-                <button class="btn btn-sm btn-danger" (click)="addDetailRecruitment()">
+                <button class="btn btn-sm btn-danger" (click)="addDetail()">
                     <i class="fa fa-plus">Добавити</i>
                 </button>
                 <row>
@@ -64,8 +64,8 @@
                 </row>
                 <div formArrayName="details">
                     <div *ngFor="let detail of addRecruitmentForm.controls.details.controls; let i = index">
-                        <div [formGroupName]="i">
-                            <div *ngIf="editRow == undefined">
+                        <div [formGroupName]="i" class = 'row'>
+                            <!--div *ngIf="editRow == undefined">
                                 <row>
                                     <column md=1>
                                         {{i+1}}
@@ -101,31 +101,38 @@
                                     </column>
                                     <column md=1>
                                         <button class="btn btn-sm btn-warning" (click)="enableDetailEditing(i)">
-                                    <i class="fa fa-pencil"></i>
-                                </button>
-                                        <button class="btn btn-sm btn-danger" (click)="deleteDetailRecruitment(i)">
-                                    <i class="fa fa-trash"></i>
-                                </button>
+                                            <i class="fa fa-pencil"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-danger" (click)="deleteDetail(i)">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
                                     </column>
                                 </row>
-                            </div>
+                            </div-->
 
-                            <div *ngIf="editRow == i">
+                            <div>
                                 <row>
                                     <label>Норме рядка: </label> {{i+1}}
+                                    <button class="btn btn-sm btn-danger" (click)="deleteDetail(i)">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
                                 </row>
+                                <!--row formGroupName = "individualId">
+                                    <label>Співробітник</label>
+                                    <select (change)="editDetail($event, i, 'individualId')" formControlName="_id">
+                                        <option *ngFor="let itemI of individuals" [ngValue]="itemI._id" >{{itemI.fio}}</option>
+                                    </select>
+                                </row-->
                                 <row>
                                     <label>Співробітник</label>
                                     <select (change)="editDetail($event, i, 'individualId')" formControlName="individualId">
-                                        <option *ngFor="let itemI of individuals" [value]="itemI._id" 
-                                            [selected]="detail.controls.individualId.value._id == itemI._id">{{itemI.fio}}</option>
+                                        <option *ngFor="let itemI of individuals" [ngValue]="itemI._id" >{{itemI.fio}}</option>
                                     </select>
                                 </row>
                                 <row>
                                     <label>Посада</label>
                                     <select (change)="editDetail($event, i, 'positionId')" formControlName="positionId">
-                                        <option *ngFor="let itemP of positions" [value]="itemP._id" 
-                                            [selected]="detail.positionId?._id == itemP._id">{{itemP.name}}</option>
+                                        <option *ngFor="let itemP of positions" [value]="itemP._id">{{itemP.name}}</option>
                                     </select>
                                 </row>
                                 <row>
@@ -143,24 +150,27 @@
                                 </row>
                                 <row>
                                     <label for="number">Ставка (шт.)</label>
-                                    <input class="form-control" type="number" step="0.01" formControlName="rate" value="{{detail.rate}}" placeholder="Ставка (шт.)">
+                                    <input class="form-control" type="number" step="0.01" formControlName="rate" placeholder="Ставка (шт.)">
                                 </row>
                                 <row>
                                     <label for="number">Вид зайнятості</label>
                                     <select (change)="editDetail($event, i, 'mainWorkId')" formControlName="mainWorkId">
-                                        <option *ngFor="let itemW of typeWorks" [value]="itemW._id" 
-                                            [selected]="detail.mainWorkId?._id == itemW._id">{{itemW.name}}</option>
+                                        <option *ngFor="let itemW of typeWorks" [value]="itemW._id">{{itemW.name}}</option>
                                     </select>
                                 </row>
                                 <row>
                                     <label for="number">Тип бюджету</label>
                                     <select (change)="editDetail($event, i, 'typeBudgetId')" formControlName="typeBudgetId">
-                                <option *ngFor="let itemTB of typeBudgets" [value]="itemTB._id" 
-                                    [selected]="detail.typeBudgetId?._id == itemTB._id">{{itemTB.name}}</option>
+                                <option *ngFor="let itemTB of typeBudgets" [value]="itemTB._id">{{itemTB.name}}</option>
                                 </select>
                                 </row>
                                 <row>
                                     <h4>Типи нарахувань</h4>
+                                </row>
+                                <row>
+                                    <button class="btn btn-sm btn-danger" (click)="addCharges(i)">
+                                        <i class="fa fa-floppy-o">Додати нарахування</i>
+                                    </button>
                                 </row>
                                 <row>
                                     <column md=2>
@@ -174,34 +184,27 @@
                                     </column>
                                 </row>
                                 <div formArrayName="charges">
-                                    <row *ngFor="let type of detail.controls.charges.controls; let iT = index">
-                                        <div [formGroupName]="iT">
-                                        <column md=2>
-                                            <select (change)="editTypeCharges($event, i, iT, 'typeChargeId')" formControlName="typeChargeId">
-                                    <option *ngFor="let item of typesCharges" [value]="item._id"
-                                        [selected]="type.typeChargeId?._id == item._id">{{item.name}}</option>
-                                </select>
-                                        </column>
-                                        <column md=3>
-                                            <input class="form-control" type="number" formControlName="count" (change)="editTypeCharges($event, i, iT, 'count')" value="{{type.count}}"
-                                                placeholder="Значение">
-                                        </column>
-                                        <column md=1>
-                                            <button class="btn btn-sm btn-danger" (click)="deleteTypeCharge(type)">
-                                                <i class="fa fa-trash"></i>
-                                            </button>
-                                        </column>
-                                    </div>                                    
-                                    </row>
-                                    <br><br>
-                                    <row>
-                                        <button class="btn btn-sm btn-danger" (click)="editRow = undefine;">
-                                <i class="fa fa-floppy-o"> Закінчити редагування рядка</i>
-                            </button>
+                                    <row *ngFor="let type of detail.controls.charges.controls; let iCh = index">
+                                        <div [formGroupName]="iCh">
+                                            <column md=2>
+                                                <select formControlName="typeChargeId">
+                                                    <option *ngFor="let item of typesCharges" [value]="item._id">{{item.name}}</option>
+                                                </select>
+                                            </column>
+                                            <column md=3>
+                                                <input class="form-control" type="number" formControlName="count" placeholder="Значенння">
+                                            </column>
+                                            <column md=1>
+                                                <button class="btn btn-sm btn-danger" (click)="deleteCharges(i, iCh)">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </column>
+                                        </div>
                                     </row>
                                 </div>
                             </div>
                         </div>
+                        <br>
                     </div>
                 </div>
                 <br>
@@ -212,5 +215,5 @@
         </container>
         ФОрма
         <pre>{{addRecruitmentForm.value | json}}</pre>
-    </div>
+        </div>
 </container>
