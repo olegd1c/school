@@ -2,12 +2,14 @@ import * as express from 'express';
 
 import CompanyCtrl from './controllers/company';
 import IndividualCtrl from './controllers/individual';
-import TypeCharge from './controllers/type-charge';
+import TypeCharge from './controllers/type-charges';
 import PositionsCtrl from './controllers/positions';
 import RecruitmentsCtrl from './controllers/recruitments';
-import TypeBudgetCtrl from './controllers/type-budget';
-import TypeWorkCtrl from './controllers/type-work';
+import TypeBudgetCtrl from './controllers/type-budgets';
+import TypeWorkCtrl from './controllers/type-works';
 import UnitCtrl from './controllers/unit';
+import TimeSheetCtrl from './controllers/time-sheets';
+
 
 export default function setRoutes(app) {
 
@@ -19,6 +21,7 @@ export default function setRoutes(app) {
     const typeBudgets = new TypeBudgetCtrl();
     const typeWorks = new TypeWorkCtrl();
     const units = new UnitCtrl();
+    const timeSheets = new TimeSheetCtrl();
 
     // APIs
     app.route('/api/companies').get(companies.getAll);
@@ -76,4 +79,11 @@ export default function setRoutes(app) {
     app.route('/api/units/:id').get(units.get);
     app.route('/api/units/:id').put(units.update);
     app.route('/api/units/:id').delete(units.delete);
+
+    app.route('/api/time-sheets').get(timeSheets.getAll);
+    app.route('/api/time-sheets/count').get(timeSheets.count);
+    app.route('/api/time-sheets').post(timeSheets.insert);
+    app.route('/api/time-sheets/:id').get(timeSheets.get);
+    app.route('/api/time-sheets/:id').put(timeSheets.update);
+    app.route('/api/time-sheets/:id').delete(timeSheets.delete);    
 }

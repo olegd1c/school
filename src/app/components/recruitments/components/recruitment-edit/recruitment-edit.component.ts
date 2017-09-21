@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@angular/forms';
 import { ToastComponent } from '@app/components//toast/toast.component';
-import { RecruitmentsService, TypesChargesService, IndividualsService, CompaniesService, PositionsService,
+import { RecruitmentsService, TypeChargesService, IndividualsService, CompaniesService, PositionsService,
     TypeBudgetsService, TypesWorksService } from '@app/services';
 import { Recruitment, TypeCharge, Individual, Company, Position, TypeBudget, RecruitmentDetails,
     TypeWork } from '@app/models';
@@ -34,7 +34,7 @@ export class RecruitmentEditComponent implements OnInit {
     private _disabledV = '0';
     private disabled = false;
 
-    constructor(private dataService: RecruitmentsService, private typesChargesService: TypesChargesService,
+    constructor(private dataService: RecruitmentsService, private typeChargesService: TypeChargesService,
         private individualsService: IndividualsService, private companiesService: CompaniesService,
         private positionsService: PositionsService, private typeBudgetsService: TypeBudgetsService,
         public toast: ToastComponent, private router: Router, private route: ActivatedRoute,
@@ -85,7 +85,7 @@ export class RecruitmentEditComponent implements OnInit {
             this.editRow = 0;
         }
 
-        this.typesChargesService._get().subscribe(
+        this.typeChargesService._get().subscribe(
             data => {
                 this.typesCharges = data;                
                 if(!this.isEditing) this.typesCharges.unshift({});

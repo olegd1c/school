@@ -10,7 +10,7 @@ export class Charge{
     }
 }
 
-export class RecruitmentDetails{
+export class RecruitmentDetails {
     dateReceipt: Date = undefined;
     dateDismissal: Date = undefined;
     positionId: Position = undefined;
@@ -25,7 +25,7 @@ export class RecruitmentDetails{
     }
 }
 
-export class Recruitment{
+export class Recruitment {
     _id: string = undefined;
     number: String = undefined;
     date: Date = undefined;

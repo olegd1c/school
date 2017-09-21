@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ToastComponent } from '@app/components//toast/toast.component';
-import { RecruitmentsService, TypesChargesService } from '@app/services';
+import { RecruitmentsService, TypeChargesService } from '@app/services';
 import { Recruitment } from '@app/models/recruitment';
 import { TypeCharge } from '@app/models/type-charge';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -30,7 +30,7 @@ export class RecruitmentItemComponent implements OnInit {
     private _disabledV: string = '0';
     private disabled: boolean = false;
 
-    constructor(private dataService: RecruitmentsService, private typesChargesService: TypesChargesService,
+    constructor(private dataService: RecruitmentsService, private typeChargesService: TypeChargesService,
         public toast: ToastComponent, private router: Router, private route: ActivatedRoute,
         public formBuilder: FormBuilder) { }
 
@@ -73,7 +73,7 @@ export class RecruitmentItemComponent implements OnInit {
         }
         /*
         this.isLoadingType = true;
-        this.typesChargesService._get().subscribe(
+        this.typeChargesService._get().subscribe(
             data => {
                 this.typesCharges = data;
                 this.typesCharges.unshift({_id: '', name: ''});

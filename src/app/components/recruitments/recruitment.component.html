@@ -29,29 +29,29 @@
                 <h3>Дії</h3>
             </column>
         </row>
-        <row *ngFor="let recruitment of recruitments">
+        <row *ngFor="let item of items">
             <column md=2>                
-                {{recruitment.companyId?.name}}
+                {{item.companyId?.name}}
             </column>
             <column md=2>
-                {{recruitment.number}}
+                {{item.number}}
             </column>
             <column md=2>
-                {{recruitment.date | date: 'dd/MM/yyyy'}}
+                {{item.date | date: 'dd/MM/yyyy'}}
             </column>
             <column md=3>
-                <span *ngFor="let detail of recruitment.details">
+                <span *ngFor="let detail of item.details">
                     {{detail.individualId?.fio}},
                 </span>
             </column>
             <column md=2>
-                <button class="btn btn-sm btn-warning" (click)="enableOpen(recruitment)">
+                <button class="btn btn-sm btn-warning" (click)="enableOpen(item)">
                     <i class="fa fa-eye"></i>
                 </button>                
-                <button class="btn btn-sm btn-warning" (click)="enableEditing(recruitment)">
+                <button class="btn btn-sm btn-warning" (click)="enableEditing(item)">
                     <i class="fa fa-pencil"></i>
                 </button>
-                <button class="btn btn-sm btn-danger" (click)="deleteRecruitment(recruitment)">
+                <button class="btn btn-sm btn-danger" (click)="deleteItem(item)">
                     <i class="fa fa-trash"></i>
                 </button>
             </column>

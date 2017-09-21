@@ -11,42 +11,41 @@ import { Router } from '@angular/router';
 })
 export class RecruitmentComponent implements OnInit {
 
-    recruitments: Recruitment[] = [];
+    items: Recruitment[] = [];
     isLoading = true;
-    recruitment = {};
 
     constructor(private dataService: RecruitmentsService, private router: Router,
         public toast: ToastComponent, 
         public formBuilder: FormBuilder) { }
 
     ngOnInit() {                
-        this.getRecruitments();
+        this.getItems();
     }
 
-    getRecruitments() {
+    getItems() {
         this.dataService._get().subscribe(
-            data => {this.recruitments = data;
-            console.log(this.recruitments);
+            data => {this.items = data;
+            console.log(this.items);
             },
             error => console.log(error),
             () => this.isLoading = false
         );
     }
 
-    enableEditing(recruitment: Recruitment) {
-        this.router.navigate(['/main/recruitment-edit', recruitment._id]);
+    enableEditing(item: Recruitment) {
+        this.router.navigate(['/main/recruitment-edit', item._id]);
     }
 
-    enableOpen(recruitment: Recruitment) {
-        this.router.navigate(['/main/recruitment-item', recruitment._id]);
+    enableOpen(item: Recruitment) {
+        this.router.navigate(['/main/recruitment-item', item._id]);
     }
 
-    deleteRecruitment(recruitment: Recruitment) {
+    deleteItem(item: Recruitment) {
         if (window.confirm('Are you sure you want to permanently delete this item?')) {
-            this.dataService._delete(recruitment).subscribe(
+            this.dataService._delete(item).subscribe(
                 res => {
-                    const pos = this.recruitments.map(elem => { return elem._id; }).indexOf(recruitment._id);
-                    this.recruitments.splice(pos, 1);
+                    const pos = this.items.map(elem => { return elem._id; }).indexOf(item._id);
+                    this.items.splice(pos, 1);
                     this.toast.setMessage('item deleted successfully.', 'success');
                 },
                 error => console.log(error)

@@ -2,15 +2,20 @@ import * as mongoose from 'mongoose';
 
 const employeeSchema = new mongoose.Schema({
     individualId: {type: mongoose.Schema.Types.ObjectId, ref: 'Individual'},
-    typeChargeId: {type: mongoose.Schema.Types.ObjectId, ref: 'TypeCharge'},
-    period_payment: Number,
+    positionId: {type: mongoose.Schema.Types.ObjectId, ref: 'Position'},
+    countWorkDays: Number,
+    countHospitalDays: Number,
+    countVacationDays: Number,
+    period_payment: Date,
     sum: Number,
 });
 
 const timeSheetSchema = new mongoose.Schema({
-    date: Number,
+    date: Date,
+    number: Number,
     companyId: {type: mongoose.Schema.Types.ObjectId, ref: 'Company'},
     employees: [ employeeSchema ],
+    countWorkDayMounth: Number,
     total: Number,
     createdAt: {
         type: Date,

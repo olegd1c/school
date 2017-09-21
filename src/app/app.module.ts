@@ -6,8 +6,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { MainComponent } from './components/main/main.component';
 import { ToastComponent } from './components/toast/toast.component';
-import { CompaniesService, IndividualsService, HttpService, TypesChargesService, PositionsService,
+import { CompaniesService, IndividualsService, HttpService, TypeChargesService, PositionsService,
     TypeBudgetsService, RecruitmentsService, TypesWorksService, UnitsService, TypePaymentsService, PaymentsService
+    , TimeSheetsService
 } from './services';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import 'hammerjs';
@@ -26,16 +27,18 @@ import { PositionsComponent } from '@app/components/positions/positions.componen
 import { PositionItemComponent } from '@app/components/positions/components/position-item/position-item.component';
 import { HeaderComponent } from '@app/components/header/header.component';
 import { FooterComponent } from '@app/components/footer/footer.component';
-import { TimeSheetComponent } from '@app/components/time-sheet/time-sheet.component';
-import { RecruitmentComponent } from '@app/components/recruitment/recruitment.component';
-import { RecruitmentItemComponent } from '@app/components/recruitment/components/recruitment-item/recruitment-item.component';
-import { RecruitmentEditComponent } from '@app/components/recruitment/components/recruitment-edit/recruitment-edit.component';
+import { TimeSheetComponent } from '@app/components/time-sheets/time-sheet.component';
+import { RecruitmentComponent } from '@app/components/recruitments/recruitment.component';
+import { RecruitmentItemComponent } from '@app/components/recruitments/components/recruitment-item/recruitment-item.component';
+import { RecruitmentEditComponent } from '@app/components/recruitments/components/recruitment-edit/recruitment-edit.component';
 import { TypeBudgetsComponent } from '@app/components/type-budgets/type-budgets.component';
 import { TypeWorksComponent } from '@app/components/type-works/type-works.component';
 import { UnitsComponent } from '@app/components/units/units.component';
 import { TypePaymentsComponent } from '@app/components/type-payments/type-payments.component';
 import { PaymentsComponent } from '@app/components/payments/payments.component';
-import { PaymentEditComponent } from '@app/components/payment-edit/payment-edit.component';
+import { PaymentEditComponent } from '@app/components/payments/components/payment-edit/payment-edit.component';
+import { TimeSheetItemComponent } from '@app/components/time-sheets/components/time-sheet-item/time-sheet-item.component';
+import { TimeSheetEditComponent } from '@app/components/time-sheets/components/time-sheet-edit/time-sheet-edit.component';
 
 const routes: Routes = [
     { path: '',  component: LoginComponent, data: { title: 'entracne'} },
@@ -56,6 +59,12 @@ const routes: Routes = [
                         data: {permissions: ['admin'], title: 'positions'}, },
                     {path: 'time-sheets', component: TimeSheetComponent,
                         data: {permissions: ['admin'], title: 'time-sheet'}, },
+                    {path: 'time-sheets/:id', component: TimeSheetItemComponent,
+                        data: {permissions: ['admin'], title: 'time-sheet'}, },                        
+                    {path: 'time-sheet-edit/:id', component: TimeSheetEditComponent,
+                        data: {permissions: ['admin'], title: 'time-sheet'}, },
+                    {path: 'time-sheet-create', component: TimeSheetEditComponent,
+                        data: {permissions: ['admin'], title: 'time-sheet'}, },                                                
                     {path: 'recruitments', component: RecruitmentComponent,
                         data: {permissions: ['admin'], title: 'recruitments'}, },
                     {path: 'recruitment-item/:id', component: RecruitmentItemComponent,
@@ -106,7 +115,9 @@ const routes: Routes = [
         RecruitmentEditComponent,
         TypePaymentsComponent,
         PaymentsComponent,
-        PaymentEditComponent
+        PaymentEditComponent,
+        TimeSheetItemComponent,
+        TimeSheetEditComponent
     ],
     imports: [
         BrowserModule,
@@ -122,7 +133,7 @@ const routes: Routes = [
         FormBuilder,
         CompaniesService,
         IndividualsService,
-        TypesChargesService,
+        TypeChargesService,
         PositionsService,
         TypeBudgetsService,
         RecruitmentsService,
@@ -130,6 +141,7 @@ const routes: Routes = [
         UnitsService,
         TypePaymentsService, 
         PaymentsService,
+        TimeSheetsService,
         ToastComponent
     ],
     bootstrap: [AppComponent],

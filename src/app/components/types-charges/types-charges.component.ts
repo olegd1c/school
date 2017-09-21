@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ToastComponent } from '@app/components/toast/toast.component';
-import { TypesChargesService } from '@app/services';
+import { TypeChargesService } from '@app/services';
 import { TypeCharge } from '@app/models/type-charge';
 
 @Component({
@@ -21,7 +21,7 @@ export class TypesChargesComponent implements OnInit {
     name = new FormControl('', Validators.required);
     typeOperation = new FormControl('', Validators.required);
 
-    constructor(private dataService: TypesChargesService,
+    constructor(private dataService: TypeChargesService,
         public toast: ToastComponent,
         public formBuilder: FormBuilder) { }
 

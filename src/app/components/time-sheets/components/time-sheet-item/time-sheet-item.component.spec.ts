@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TypesChargesComponent } from './types-charges.component';
+import { TimeSheetItemComponent } from './time-sheet-item.component';
 
-describe('TypesChargesComponent', () => {
-  let component: TypesChargesComponent;
-  let fixture: ComponentFixture<TypesChargesComponent>;
+describe('TimeSheetItemComponent', () => {
+  let component: TimeSheetItemComponent;
+  let fixture: ComponentFixture<TimeSheetItemComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TypesChargesComponent ]
+      declarations: [ TimeSheetItemComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TypesChargesComponent);
+    fixture = TestBed.createComponent(TimeSheetItemComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

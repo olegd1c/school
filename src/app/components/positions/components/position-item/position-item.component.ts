@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ToastComponent } from '@app/components//toast/toast.component';
-import { PositionsService, TypesChargesService } from '@app/services';
+import { PositionsService, TypeChargesService } from '@app/services';
 import { Position } from '@app/models/position';
 import { TypeCharge } from '@app/models/type-charge';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -28,7 +28,7 @@ export class PositionItemComponent implements OnInit {
     private _disabledV: string = '0';
     private disabled: boolean = false;
 
-    constructor(private dataService: PositionsService, private typesChargesService: TypesChargesService,
+    constructor(private dataService: PositionsService, private typeChargesService: TypeChargesService,
         public toast: ToastComponent, private router: Router, private route: ActivatedRoute,
         public formBuilder: FormBuilder) { }
 
@@ -63,7 +63,7 @@ export class PositionItemComponent implements OnInit {
             this.isLoading = false;
         }
         this.isLoadingType = true;
-        this.typesChargesService._get().subscribe(
+        this.typeChargesService._get().subscribe(
             data => {
                 this.typesCharges = data;
                 this.typesCharges.unshift({_id: '', name: '', typeOperation: ''});
