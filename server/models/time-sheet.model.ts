@@ -6,17 +6,15 @@ const employeeSchema = new mongoose.Schema({
     countWorkDays: Number,
     countHospitalDays: Number,
     countVacationDays: Number,
-    period_payment: Date,
-    sum: Number,
+    countNightShift: Number,
 });
 
 const timeSheetSchema = new mongoose.Schema({
     date: Date,
     number: Number,
     companyId: {type: mongoose.Schema.Types.ObjectId, ref: 'Company'},
-    employees: [ employeeSchema ],
+    details: [ employeeSchema ],
     countWorkDayMounth: Number,
-    total: Number,
     createdAt: {
         type: Date,
         default: new Date()

@@ -57,10 +57,11 @@ export default function setRoutes(app) {
     app.route('/api/type-budgets').post(typeBudgets.insert);
     app.route('/api/type-budgets/:id').get(typeBudgets.get);
     app.route('/api/type-budgets/:id').put(typeBudgets.update);
-    app.route('/api/type-budgets/:id').delete(typeBudgets.delete);  
+    app.route('/api/type-budgets/:id').delete(typeBudgets.delete);
 
     app.route('/api/recruitments').get(recruitments.getAll);
     app.route('/api/recruitments/count').get(recruitments.count);
+    app.route('/api/recruitments/employees').post(recruitments.getEmployees);
     app.route('/api/recruitments').post(recruitments.insert);
     app.route('/api/recruitments/:id').get(recruitments.get);
     app.route('/api/recruitments/:id').put(recruitments.update);
@@ -85,5 +86,5 @@ export default function setRoutes(app) {
     app.route('/api/time-sheets').post(timeSheets.insert);
     app.route('/api/time-sheets/:id').get(timeSheets.get);
     app.route('/api/time-sheets/:id').put(timeSheets.update);
-    app.route('/api/time-sheets/:id').delete(timeSheets.delete);    
+    app.route('/api/time-sheets/:id').delete(timeSheets.delete);
 }

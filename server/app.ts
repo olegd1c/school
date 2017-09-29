@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(morgan('dev'));
 
 dotenv.load({ path: '.env' });
-mongoose.connect(process.env.MONGODB_URI);
+mongoose.connect(process.env.MONGODB_URI, { useMongoClient: true });
 const db = mongoose.connection;
 (<any>mongoose).Promise = global.Promise;
 

@@ -8,7 +8,13 @@ const ChargeSchema = new mongoose.Schema({
     count: Number
 });
 
-const recruitmentDetailsSchema = new mongoose.Schema({
+const recruitmentSchema = new mongoose.Schema({
+    number: String,
+    date: {
+        type: Date,
+        default: null
+    },
+    companyId: {type: mongoose.Schema.Types.ObjectId, ref: 'Company'},
     positionId: {type: mongoose.Schema.Types.ObjectId, ref: 'Position'},
     individualId: {type: mongoose.Schema.Types.ObjectId, ref: 'Individual'},
     dateReceipt: {
@@ -21,19 +27,9 @@ const recruitmentDetailsSchema = new mongoose.Schema({
     },
     salary: Number,
     rate: Number,
-    charges: [ChargeSchema],
-    mainWorkId: {type: mongoose.Schema.Types.ObjectId, ref: 'TypeWork'},
+     mainWorkId: {type: mongoose.Schema.Types.ObjectId, ref: 'TypeWork'},
     typeBudgetId: {type: mongoose.Schema.Types.ObjectId, ref: 'TypeBudget'},
-});
-
-const recruitmentSchema = new mongoose.Schema({
-    number: String,
-    date: {
-        type: Date,
-        default: null
-    },
-    companyId: {type: mongoose.Schema.Types.ObjectId, ref: 'Company'},
-    details: [recruitmentDetailsSchema],
+    charges: [ChargeSchema],
     createdAt: {
         type: Date,
         default: new Date()
@@ -44,11 +40,13 @@ const recruitmentSchema = new mongoose.Schema({
     },
 });
 
+/*
 recruitmentSchema.virtual('company', {
     ref: 'Company',
     localField: '_id',
     foreignField: 'name'
   });
+*/  
 
 const Charges = mongoose.model('Charges', ChargeSchema);
 const Recruitments = mongoose.model('Recruitments', recruitmentSchema);

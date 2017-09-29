@@ -40,9 +40,7 @@
                 {{item.date | date: 'dd/MM/yyyy'}}
             </column>
             <column md=3>
-                <span *ngFor="let detail of item.details">
-                    {{detail.individualId?.fio}},
-                </span>
+                {{item.individualId?.fio}},
             </column>
             <column md=2>
                 <button class="btn btn-sm btn-warning" (click)="enableOpen(item)">

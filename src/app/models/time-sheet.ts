@@ -6,9 +6,8 @@ export class Employee {
     countWorkDays: Number = undefined;
     countHospitalDays: Number = undefined;
     countVacationDays: Number = undefined;
-    period_payment: Date = undefined;
-    sum: Number = undefined;
-    
+    countNightShift: Number = undefined;
+        
     constructor() {
 
     }
@@ -20,7 +19,6 @@ export class TimeSheet {
     number: Number = undefined;
     companyId: Company = undefined;
     countWorkDayMounth: number = undefined;
-    total: number = undefined;
     details: Employee[] = [new Employee];
 
     constructor() {

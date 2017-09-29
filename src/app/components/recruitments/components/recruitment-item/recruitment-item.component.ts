@@ -11,7 +11,7 @@ import { Router, ActivatedRoute } from '@angular/router';
   templateUrl: './recruitment-item.component.html',
 })
 export class RecruitmentItemComponent implements OnInit {
-    public recruitment: Recruitment;
+    public item: Recruitment;
     public isEditing: boolean = false;
     public isLoading: boolean = false;
     public isLoadingType: boolean = false;
@@ -41,22 +41,22 @@ export class RecruitmentItemComponent implements OnInit {
             date: this.date,
             details: this.details
         });
-        let recruitmentId;
+        let itemId;
         let isEdit:boolean = false;
         if(this.route.snapshot.url.length > 1) {
-            recruitmentId = this.route.snapshot.url[1].path;
+            itemId = this.route.snapshot.url[1].path;
         }        
         if(this.route.snapshot.url.length > 2) {
             isEdit = Boolean(this.route.snapshot.url[2].path);
         }        
         
-        if (recruitmentId) {
+        if (itemId) {
             this.isLoading = true;    
-            this.dataService._getOne({_id: recruitmentId}).subscribe(
+            this.dataService._getOne({_id: itemId}).subscribe(
                         data => {
-                            this.recruitment = data;
+                            this.item = data;
                             //this.addRecruitmentForm.setValue({number: this.recruitment.number, details: this.recruitment.details});
-                            this.addRecruitmentForm.patchValue(this.recruitment);
+                            this.addRecruitmentForm.patchValue(this.item);
                         },
                         error => console.log(error),
                         () => this.isLoading = false
@@ -65,7 +65,7 @@ export class RecruitmentItemComponent implements OnInit {
             this._title_button = "Зберегти";
             this.isEditing = isEdit;
         } else {
-            this.recruitment = {_id: '', number: '', date: null, companyId: null, details: []};
+            this.item = new Recruitment();
             this._title = "Створити посаду";
             this._title_button = "Створити";
             this.isEditing = false;
@@ -96,10 +96,10 @@ export class RecruitmentItemComponent implements OnInit {
                 error => console.log(error)
             );
         } else {
-            this.dataService._edit(this.recruitment).subscribe(
+            this.dataService._edit(this.item).subscribe(
                 res => {
                     this.isEditing = false;
-                    this.recruitment = this.recruitment;
+                    this.item = this.item;
                     this.toast.setMessage('item edited successfully.', 'success');
                     this.router.navigate(['/main/recruitments']);
                 },
@@ -133,12 +133,7 @@ export class RecruitmentItemComponent implements OnInit {
         this.recruitment.typeChargeIds = this.recruitment.typeChargeIds.filter((item) => item._id != type._id);
         this.typeChargeIds.setValue(this.recruitment.typeChargeIds);
         */
-    }
-
-    deleteDetail(detail){
-        this.recruitment.details = this.recruitment.details.filter((item) => detail._id != detail._id);
-        //this.typeChargeIds.setValue(this.recruitment.details);
-    }    
+    }  
 
     returnToList(){
         this.router.navigate(['/main/recruitments']);

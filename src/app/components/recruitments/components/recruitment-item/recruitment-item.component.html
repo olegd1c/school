@@ -15,19 +15,16 @@
             </row>
             <row>
                 <column md=2>
-                    {{recruitment.companyId.name}}
+                    {{item.companyId.name}}
                 </column>
                 <column md=2>
-                    {{recruitment.number}}
+                    {{item.number}}
                 </column>
                 <column md=2>
-                    {{recruitment.date | date: 'dd/MM/yyyy'}}
+                    {{item.date | date: 'dd/MM/yyyy'}}
                 </column>
             </row>
-            <row>
-                <column md=1>
-                    <h3>№</h3>
-                </column>                
+            <row>          
                 <column md=1>
                     <h3>ФИО</h3>
                 </column>
@@ -56,36 +53,33 @@
                     <h3>Види нарахувань</h3>
                 </column>                
             </row>
-            <row *ngFor="let detail of recruitment.details; let i = index">
+            <row>
                 <column md=1>
-                    {{i+1}}
+                    {{item.individualId.fio}}
                 </column>
                 <column md=1>
-                    {{detail.individualId.fio}}
-                </column>
-                <column md=1>
-                    {{detail.positionId.name}}
+                    {{item.positionId.name}}
                 </column>
                 <column md=2>
-                    {{detail.dateReceipt | date: 'dd.MM.yyyy'}}
+                    {{item.dateReceipt | date: 'dd.MM.yyyy'}}
                 </column>
                 <column md=2>
-                    {{detail.dateDismissal | date: 'dd.MM.yyyy'}}
+                    {{item.dateDismissal | date: 'dd.MM.yyyy'}}
                 </column>
                 <column md=1>
-                     {{detail.salary}}
+                     {{item.salary}}
                 </column>
                 <column md=1>
-                     {{detail.rate}}
+                     {{item.rate}}
                 </column>
                 <column md=1>
-                     {{detail.mainWork}}
+                     {{item.mainWork}}
                 </column>
                 <column md=1>
-                    {{detail.typeBudgetId.name}}
+                    {{item.typeBudgetId.name}}
                 </column>
                 <column md=1>
-                    <span *ngFor="let type of detail.charges">
+                    <span *ngFor="let type of item.charges">
                         {{type.typeChargeId.name}}, 
                     </span>
                 </column>                
@@ -102,59 +96,50 @@
             <form class="form-inline" [formGroup]="addRecruitmentForm" (ngSubmit)="addRecruitment()" style="text-align:center">
                 <row>
                     <label for="companyId">Організація</label>
-                    <input class="form-control" [(ngModel)]="recruitment.companyId" type="text" name="companyId" formControlName="companyId" value="{{recruitment.companyId?.name}}" placeholder="Організація">
+                    <input class="form-control" [(ngModel)]="item.companyId" type="text" name="companyId" formControlName="companyId" value="{{item.companyId?.name}}" placeholder="Організація">
                 </row>
                 <row>
                     <label for="number">Номер документа</label>
-                    <input class="form-control" [(ngModel)]="recruitment.number" type="text" name="number" formControlName="number" placeholder="Номер документа">
+                    <input class="form-control" [(ngModel)]="item.number" type="text" name="number" formControlName="number" placeholder="Номер документа">
                 </row>
                 <row>
                     <label for="number">Дата документа</label>
-                    <input class="form-control" [(ngModel)]="recruitment.date" type="text" name="date" formControlName="date" placeholder="Дата документа">
+                    <input class="form-control" [(ngModel)]="item.date" type="text" name="date" formControlName="date" placeholder="Дата документа">
                 </row>
-                <div *ngFor="let detail of recruitment.details; let i = index">
-                    <row>
-                        <label for="number">Норме рядка: </label> {{i+1}}
-                    </row>
+                <div>
                     <row>
                         <label for="number">Співробітник</label>
-                        <input class="form-control" type="text" value="{{detail.individualId.fio}}" placeholder="Співробітник">
+                        <input class="form-control" type="text" value="{{item.individualId.fio}}" placeholder="Співробітник">
                     </row>
                     <column md=1>
-                        {{i+1}}
+                        {{item.individualId.fio}}
                     </column>
                     <column md=1>
-                        {{detail.individualId.fio}}
-                    </column>
-                    <column md=1>
-                        {{detail.positionId.name}}
+                        {{item.positionId.name}}
                     </column>
                     <column md=2>
-                        {{detail.dateReceipt | date: 'dd.MM.yyyy'}}
+                        {{item.dateReceipt | date: 'dd.MM.yyyy'}}
                     </column>
                     <column md=2>
-                        {{detail.dateDismissal | date: 'dd.MM.yyyy'}}
+                        {{item.dateDismissal | date: 'dd.MM.yyyy'}}
                     </column>
                     <column md=1>
-                        {{detail.salary}}
+                        {{item.salary}}
                     </column>
                     <column md=1>
-                        {{detail.rate}}
+                        {{item.rate}}
                     </column>
                     <column md=1>
-                        {{detail.mainWork}}
+                        {{item.mainWork}}
                     </column>
                     <column md=1>
-                        {{detail.typeBudgetId.name}}
+                        {{item.typeBudgetId.name}}
                     </column>
                     <column md=1>
-                        <span *ngFor="let type of detail.charges">
+                        <span *ngFor="let type of item.charges">
                                         {{type.typeChargeId.name}}, 
                                     </span>
                     </column>
-                    <button class="btn btn-sm btn-danger" (click)="deleteDetail(detail)">
-                        <i class="fa fa-trash"></i>
-                    </button>
                 </div>
 
                 <!--row *ngFor="let type of position.typeChargeIds">

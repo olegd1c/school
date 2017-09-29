@@ -1,6 +1,8 @@
 import Recruitment from '../models/recruitment.model';
+import RecruitmentDetails from '../models/recruitment.model';
 import BaseCtrl from './base';
 let moment = require('moment');
+import * as mongoose from 'mongoose';
 
 export default class RecruitmentsCtrl extends BaseCtrl {
     model = Recruitment;
@@ -9,10 +11,10 @@ export default class RecruitmentsCtrl extends BaseCtrl {
     getAll = (req, res) => {
         this.model.find()
         .populate('companyId')
-        .populate('details.individualId')
-        .populate('details.positionId')
-        .populate('details.typeWorkId')
-        .populate('details.charges.typeChargeId')
+        .populate('individualId')
+        .populate('positionId')
+        .populate('typeWorkId')
+        .populate('charges.typeChargeId')
         .exec(function(err, positions) {
             if(err) return console.error(err);
             console.log(positions);
@@ -36,28 +38,49 @@ export default class RecruitmentsCtrl extends BaseCtrl {
     // Get by id
     get = (req, res) => {
         this.model.findOne({ _id: req.params.id })
-        //.populate('companyId')
-        //.populate('details.individualId')
-        //.populate('details.positionId')
-        //.populate('details.charges.typeChargeId')
-        //.populate('details.typeBudgetId')
-        //.populate('details.mainWorkId')
-        .populate('company')
         .exec(function(err, recruitment) {
             if(err) return console.error(err);
             let data = JSON.parse(JSON.stringify(recruitment));
             let d = data.date;
-            data.date = moment(d).format('YYYY-MM-DD');    
-            data.details.forEach(function(detail) {
-                detail.dateReceipt = moment(detail.dateReceipt).format('YYYY-MM-DD');
-                if(detail.dateDismissal) {
-                    detail.dateDismissal = moment(detail.dateDismissal).format('YYYY-MM-DD');
-                }
-              });
-              
-              console.log('company get');
-              console.log(data);
+            data.date = moment(d).format('YYYY-MM-DD');
+            data.dateReceipt = moment(data.dateReceipt).format('YYYY-MM-DD');
+            if(data.dateDismissal) {
+                data.dateDismissal = moment(data.dateDismissal).format('YYYY-MM-DD');
+            }            
             res.status(200).json(data);
         });
     };
+
+    getEmployees = (req, res) => {
+        console.log(req.body);
+        const params = req.body.params;
+        
+        this.model.find({ 
+            companyId: params.companyId,
+            dateReceipt : {
+                $gte: params.start,
+                $lte: params.end
+            }          
+        })
+        .select('individualId')
+        .select('positionId')
+        .and([
+            {$or: [
+                {dateDismissal: null},
+                {dateDismissal : 
+                    {
+                        $gte: params.end,
+                    }
+                }
+            ]}
+        ])
+        .exec(function(err, items) {
+            if(err) return console.error(err);
+            let data = JSON.parse(JSON.stringify(items));
+            
+            console.log('getEmployees');
+            console.log(items);
+            res.status(200).json(data);
+        });
+    };    
 }

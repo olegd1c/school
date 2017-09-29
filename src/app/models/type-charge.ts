@@ -1,5 +1,6 @@
 export interface TypeCharge{
     _id?:string;
     name?: string;
-    typeOperation?: string;
+    type?: number;
+    typeOperation?: string;    
 }

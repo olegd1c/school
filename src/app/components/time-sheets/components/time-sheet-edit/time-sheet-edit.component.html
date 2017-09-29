@@ -1,3 +1,111 @@
-<p>
-  time-sheet-edit works!
-</p>
+<container>
+    <div class="card-block" *ngIf="countLoading == loadingTotal">
+        <h4 class="card-header">{{_title}} </h4>
+        <container>
+                <button class="btn" (click)="fillDetail()">
+                        <i class="fa fa-plus">Заповнити</i>
+                    </button>
+            <form class="form-inline" [formGroup]="addItemForm" (ngSubmit)="saveItem()" style="text-align:center" novalidate>
+                <row>
+                    <label for="companyId">Організація</label>
+                    <select class="form-control" formControlName="companyId">
+                      <option *ngFor="let itemC of companies" [value]="itemC._id"
+                          [selected]="addItemForm.controls.companyId.value._id == itemC._id">
+                          {{itemC.name}}
+                      </option>
+                  </select>
+                </row>
+                <row>
+                    <label for="number">Номер документа</label>
+                    <input class="form-control" type="text" name="number" formControlName="number" placeholder="Номер документа">
+                </row>
+                <row>
+                    <label for="number">Дата документа</label>
+                    <input class="form-control" type="date" name="date" formControlName="date" placeholder="Дата документа">
+                </row>
+                <row>
+                    <label for="number">Кількість робочих днів</label>
+                    <input class="form-control" type="number" name="countWorkDayMounth" formControlName="countWorkDayMounth" placeholder="Робочих днів у місяці">
+                </row>
+                <row>
+                    <h4>Деталі</h4>
+                </row>
+
+                <button class="btn btn-sm btn-danger" (click)="addDetail()">
+                  <i class="fa fa-plus">Добавити</i>
+                </button>
+                <row>
+                    <column md=1>
+                        <h3>№</h3>
+                    </column>
+                    <column md=2>
+                        <h3>Співробітник</h3>
+                    </column>
+                    <column md=2>
+                        <h3>Посада</h3>
+                    </column>
+                    <column md=1>
+                        <h3 class="сount-header">Робочих днів</h3>
+                    </column>
+                    <column md=1>
+                        <h3 class="сount-header">Лікарняних днів</h3>
+                    </column>
+                    <column md=1>
+                        <h3 class="сount-header">Відпускних</h3>
+                    </column>
+                    <column md=1>
+                        <h3 class="сount-header">Нічних</h3>
+                    </column>
+                    <column md=1>
+                        <h3>Дії</h3>
+                    </column>
+                </row>
+                <div formArrayName="details">
+                    <div *ngFor="let detail of addItemForm.controls.details.controls; let i = index">
+                        <div [formGroupName]="i" class='row'>
+                            <row>
+                                <column md=1>
+                                    {{i+1}}
+                                </column>
+                                <column md=2>
+                                    <select formControlName="individualId">
+                                        <option *ngFor="let itemI of individuals" [ngValue]="itemI._id" >{{itemI.fio}}</option>
+                                    </select>
+                                </column>
+                                <column md=2>
+                                    <select formControlName="positionId">
+                                        <option *ngFor="let itemP of positions" [value]="itemP._id">{{itemP.name}}</option>
+                                    </select>
+                                </column>
+                                <column md=1>
+                                    <input class="form-control сount-number" type="number" formControlName="countWorkDays">
+                                </column>
+                                <column md=1>
+                                    <input class="form-control сount-number" type="number" formControlName="countHospitalDays">
+                                </column>
+                                <column md=1>
+                                    <input class="form-control сount-number" type="number" formControlName="countVacationDays">
+                                </column>
+                                <column md=1>
+                                    <input class="form-control сount-number" type="number" formControlName="countNightShift">
+                                </column>
+                                <column md=1>
+                                    <button class="btn btn-sm btn-danger" (click)="deleteDetail(i)">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </column>
+                            </row>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+                <br>
+                <button class="btn btn-primary" type="submit" [disabled]="!addItemForm.valid">
+                  <i class="fa fa-floppy-o"></i>{{_title_button}}
+              </button>
+            </form>
+        </container>
+        ФОрма
+        <pre>{{addItemForm.value | json}}</pre>
+    </div>
+</container>
