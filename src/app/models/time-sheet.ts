@@ -1,4 +1,4 @@
-import { Individual, Position, Company, TypeCharge, TypeBudget, TypeWork } from '@app/models';
+import { Individual, Position, Company, TypeCharge, TypeBudget, TypeWork, Recruitment } from '@app/models';
 
 export class Employee {
     individualId: Individual = undefined;
@@ -7,7 +7,8 @@ export class Employee {
     countHospitalDays: Number = undefined;
     countVacationDays: Number = undefined;
     countNightShift: Number = undefined;
-        
+    salary: Number = undefined;
+    recruimentId: Recruitment = undefined;
     constructor() {
 
     }

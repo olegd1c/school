@@ -7,6 +7,7 @@ const employeeSchema = new mongoose.Schema({
     countHospitalDays: Number,
     countVacationDays: Number,
     countNightShift: Number,
+    salary: Number,
 });
 
 const timeSheetSchema = new mongoose.Schema({

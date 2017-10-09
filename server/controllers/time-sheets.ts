@@ -15,5 +15,26 @@ export default class TimeSheetCtrl extends BaseCtrl {
             console.log(positions);
             res.json(positions);
         });
-    };    
+    };
+
+    getEmployees = (req, res) => {
+        console.log(req.body);
+        const params = req.body.params;
+        
+        this.model.findOne({ 
+            companyId: params.companyId,
+            date : {
+                $gte: params.start,
+                $lte: params.end
+            }
+        })
+        .exec(function(err, items) {
+            if(err) return console.error(err);
+            let data = JSON.parse(JSON.stringify(items));
+            
+            console.log('getEmployees');
+            console.log(items);
+            res.status(200).json(data);
+        });
+    };        
 }

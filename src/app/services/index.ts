@@ -10,3 +10,4 @@ export * from './units.service';
 export * from './payments.service';
 export * from './type-payments.service';
 export * from './time-sheets.service';
+export * from './settings.service';

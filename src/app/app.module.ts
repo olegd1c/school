@@ -8,7 +8,7 @@ import { MainComponent } from './components/main/main.component';
 import { ToastComponent } from './components/toast/toast.component';
 import { CompaniesService, IndividualsService, HttpService, TypeChargesService, PositionsService,
     TypeBudgetsService, RecruitmentsService, TypesWorksService, UnitsService, TypePaymentsService, PaymentsService
-    , TimeSheetsService
+    , TimeSheetsService, SettingsService
 } from './services';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import 'hammerjs';
@@ -39,6 +39,9 @@ import { PaymentsComponent } from '@app/components/payments/payments.component';
 import { PaymentEditComponent } from '@app/components/payments/components/payment-edit/payment-edit.component';
 import { TimeSheetItemComponent } from '@app/components/time-sheets/components/time-sheet-item/time-sheet-item.component';
 import { TimeSheetEditComponent } from '@app/components/time-sheets/components/time-sheet-edit/time-sheet-edit.component';
+import { DatePickerModule } from "angular-io-datepicker";
+import { SettingsComponent } from '@app/components/settings/settings.component';
+import { SettingEditComponent } from '@app/components/settings/components/setting-edit/setting-edit.component';
 
 const routes: Routes = [
     { path: '',  component: LoginComponent, data: { title: 'entracne'} },
@@ -87,6 +90,16 @@ const routes: Routes = [
                         data: {permissions: ['admin'], title: 'payment-edit'}, },
                     {path: 'payment-create', component: PaymentEditComponent,
                         data: {permissions: ['admin'], title: 'payment-create'}, },
+                    {path: 'payment-edit/:id', component: SettingsComponent,
+                        data: {permissions: ['admin'], title: 'payment-edit'}, },
+                    {path: 'payment-create', component: SettingsComponent,
+                        data: {permissions: ['admin'], title: 'payment-create'}, },
+                    {path: 'settings', component: SettingsComponent,
+                        data: {permissions: ['admin'], title: 'settings'}, },
+                    {path: 'setting-create', component: SettingEditComponent,
+                        data: {permissions: ['admin'], title: 'setting-edit'}, },  
+                    {path: 'setting-edit/:id', component: SettingEditComponent,
+                        data: {permissions: ['admin'], title: 'setting-edit'}, },                        
                 ]
 },
     // otherwise redirect to home
@@ -117,7 +130,9 @@ const routes: Routes = [
         PaymentsComponent,
         PaymentEditComponent,
         TimeSheetItemComponent,
-        TimeSheetEditComponent
+        TimeSheetEditComponent,
+        SettingsComponent,
+        SettingEditComponent
     ],
     imports: [
         BrowserModule,
@@ -127,7 +142,8 @@ const routes: Routes = [
         ReactiveFormsModule,
         BrowserAnimationsModule,
         RouterModule.forRoot(routes),
-        BootstrapGridModule
+        BootstrapGridModule,
+        DatePickerModule
     ],
     providers: [
         FormBuilder,
@@ -142,6 +158,7 @@ const routes: Routes = [
         TypePaymentsService, 
         PaymentsService,
         TimeSheetsService,
+        SettingsService,
         ToastComponent
     ],
     bootstrap: [AppComponent],

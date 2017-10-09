@@ -1,0 +1,35 @@
+<container>
+    <div class="card-block" *ngIf="countLoading == loadingTotal">
+        <h4 class="card-header">{{_title}} </h4>
+        <container>
+            <form class="form-inline" [formGroup]="addItemForm" (ngSubmit)="saveItem()" style="text-align:center" novalidate>
+                <row>
+                    <label for="salaryId">Вид Зарплата</label>
+                    <select class="form-control" formControlName="salaryId">
+                        <option *ngFor="let itemS of typePayments" [value]="itemS._id">
+                            {{itemS.name}}
+                        </option>
+                    </select>
+                </row>
+                <row>
+                    <label for="prepaymentId">Вид Аванс</label>
+                    <select class="form-control" formControlName="prepaymentId">
+                        <option *ngFor="let itemP of typePayments" [value]="itemP._id">
+                            {{itemP.name}}
+                        </option>
+                    </select>
+                </row>
+                <row>
+                    <label for="number">Розмір авансу</label>
+                    <input class="form-control" type="number" name="percentPrepayment" formControlName="percentPrepayment" placeholder="Розмір авансу, %">
+                </row>
+                <br>
+                <button class="btn btn-primary" type="submit" [disabled]="!addItemForm.valid">
+                    <i class="fa fa-floppy-o"></i>{{_title_button}}
+                </button>
+            </form>
+        </container>
+        ФОрма
+        <pre>{{addItemForm.value | json}}</pre>
+    </div>
+</container>

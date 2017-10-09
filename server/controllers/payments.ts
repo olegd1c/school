@@ -43,4 +43,6 @@ export default class PaymentsCtrl extends BaseCtrl {
             res.status(200).json(position);
         });
     };
+
+    //db.blog.posts.findOne( { }, { "comments" : { "$slice" : 10 } } );
 }

@@ -1,3 +1,120 @@
-<p>
-  payment-edit works!
-</p>
+<div class="container">
+    <div class="card-block" *ngIf="countLoading == loadingTotal">
+        <h4 class="card-header">{{_title}} </h4>
+        <div class="container">
+            <button class="btn" (click)="fillDetail()">
+              <i class="fa fa-plus">Заповнити</i>
+          </button>
+            <form class="form-inline" [formGroup]="addItemForm" (ngSubmit)="saveItem()" style="text-align:center" novalidate>
+                <div class="row">
+                    <label for="companyId">Організація</label>
+                    <select class="form-control" formControlName="companyId">
+                    <option *ngFor="let itemC of companies" [value]="itemC._id"
+                        [selected]="addItemForm.controls.companyId.value._id == itemC._id">
+                        {{itemC.name}}
+                    </option>
+                </select>
+                </div>
+                <div class="row">
+                    <label for="number">Номер документа</label>
+                    <input class="form-control" type="text" name="number" formControlName="number" placeholder="Номер документа">
+                </div>
+                <div class="row">
+                    <label for="number">Дата документа</label>
+                    <!--input class="form-control" type="date" name="date" formControlName="date" placeholder="Дата документа"-->
+                    <date-picker class="form-control" formControlName="date" mode="date" name="date"></date-picker>
+                </div>
+                <div class="row">
+                    <label for="companyId">Вид виплат</label>
+                    <select class="form-control" formControlName="typePaymentId">
+                        <option *ngFor="let itemP of typePayments" [value]="itemP._id"
+                            [selected]="addItemForm.controls.typePaymentId.value._id == itemP._id">
+                            {{itemP.name}}
+                        </option>
+                    </select>
+                </div>
+                <div class="row">
+                    <h4>Деталі</h4>
+                </div>
+                <button class="btn btn-sm btn-danger" (click)="addDetail()">
+                <i class="fa fa-plus">Добавити</i>
+              </button>
+                <div class="row">
+                    <div>
+                        <h3>№</h3>
+                    </div>
+                    <div>
+                        <h3>Співробітник</h3>
+                    </div>
+                    <div>
+                        <h3>Посада</h3>
+                    </div>
+                    <div>
+                        <h3>Тип бюджету</h3>
+                    </div>
+                    <div>
+                        <h3>Тип виплат</h3>
+                    </div>
+                    <div>
+                        <h3>Місяць</h3>
+                    </div>
+                    <div>
+                        <h3>Сума</h3>
+                    </div>
+                    <div>
+                        <h3>Дії</h3>
+                    </div>
+                </div>
+                <div formArrayName="details" class="container">
+                    <div *ngFor="let detail of addItemForm.controls.details.controls; let i = index">
+                        <div [formGroupName]="i">
+                            <div class="row">
+                                <div>
+                                    {{i+1}}
+                                </div>
+                                <div>
+                                    <select formControlName="individualId">
+                                      <option *ngFor="let itemI of individuals" [ngValue]="itemI._id" >{{itemI.fio}}</option>
+                                  </select>
+                                </div>
+                                <div>
+                                    <select formControlName="positionId">
+                                      <option *ngFor="let itemP of positions" [value]="itemP._id">{{itemP.name}}</option>
+                                  </select>
+                                </div>
+                                <div>
+                                    <select formControlName="typeBudgetId">
+                                      <option *ngFor="let itemB of typeBudgets" [value]="itemB._id">{{itemB.name}}</option>
+                                  </select>
+                                </div>
+                                <div>
+                                    <select formControlName="typeChargeId">
+                                      <option *ngFor="let itemC of typeCharges" [value]="itemC._id">{{itemC.name}}</option>
+                                  </select>
+                                </div>
+                                <div>
+                                    <input type="date" formControlName="month">
+                                </div>
+                                <div>
+                                    <input type="number" formControlName="sum">
+                                </div>
+                                <div>
+                                    <button class="btn btn-sm btn-danger" (click)="deleteDetail(i)">
+                                      <i class="fa fa-trash"></i>
+                                  </button>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+                <br>
+                <button class="btn btn-primary" type="submit" [disabled]="!addItemForm.valid">
+                <i class="fa fa-floppy-o"></i>{{_title_button}}
+            </button>
+            </form>
+        </div>
+        ФОрма
+        <pre>{{addItemForm.value | json}}</pre>
+    </div>
+</div>

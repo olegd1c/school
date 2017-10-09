@@ -2,9 +2,9 @@
     <div class="card-block" *ngIf="countLoading == loadingTotal">
         <h4 class="card-header">{{_title}} </h4>
         <container>
-                <button class="btn" (click)="fillDetail()">
-                        <i class="fa fa-plus">Заповнити</i>
-                    </button>
+            <button class="btn" (click)="fillDetail()">
+                <i class="fa fa-plus">Заповнити</i>
+            </button>
             <form class="form-inline" [formGroup]="addItemForm" (ngSubmit)="saveItem()" style="text-align:center" novalidate>
                 <row>
                     <label for="companyId">Організація</label>

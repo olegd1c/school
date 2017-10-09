@@ -1,7 +1,8 @@
 import * as mongoose from 'mongoose';
 
 const typePaymentSchema = new mongoose.Schema({
-    name: String,	
+    name: String,
+    type: Number,
     createdAt: {
         type: Date,
         default: new Date()

@@ -64,6 +64,8 @@ export default class RecruitmentsCtrl extends BaseCtrl {
         })
         .select('individualId')
         .select('positionId')
+        .select('salary')
+        .select('recruimentId')
         .and([
             {$or: [
                 {dateDismissal: null},

@@ -44,11 +44,22 @@ export class MainComponent implements OnInit {
                     name: 'Види зайнятості',
                     permission: ['admin'],
                     routerLink: 'main/type-works'
-                }, {
+                }, 
+                {
                     name: 'Одиниці виміру',
                     permission: ['admin'],
                     routerLink: 'main/units'
                 },
+                {
+                    name: 'Види виплат',
+                    permission: ['admin'],
+                    routerLink: 'main/type-payments'
+                },
+                {
+                    name: 'Налаштування',
+                    permission: ['admin'],
+                    routerLink: 'main/settings'
+                }, 
             ]
         },
         {
@@ -64,6 +75,11 @@ export class MainComponent implements OnInit {
                     permission: ['admin'],
                     routerLink: 'main/time-sheets'
                 },
+                {
+                    name: 'Виплати',
+                    permission: ['admin'],
+                    routerLink: 'main/payments'
+                },                
             ]
         }
     ];

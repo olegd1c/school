@@ -9,7 +9,9 @@ import TypeBudgetCtrl from './controllers/type-budgets';
 import TypeWorkCtrl from './controllers/type-works';
 import UnitCtrl from './controllers/unit';
 import TimeSheetCtrl from './controllers/time-sheets';
-
+import TypePaymentsCtrl from './controllers/type-payments';
+import PaymentsCtrl from './controllers/payments';
+import SettingsCtrl from './controllers/settings';
 
 export default function setRoutes(app) {
 
@@ -22,6 +24,9 @@ export default function setRoutes(app) {
     const typeWorks = new TypeWorkCtrl();
     const units = new UnitCtrl();
     const timeSheets = new TimeSheetCtrl();
+    const typePayments = new TypePaymentsCtrl();
+    const payments = new PaymentsCtrl();
+    const settings = new SettingsCtrl();
 
     // APIs
     app.route('/api/companies').get(companies.getAll);
@@ -83,8 +88,30 @@ export default function setRoutes(app) {
 
     app.route('/api/time-sheets').get(timeSheets.getAll);
     app.route('/api/time-sheets/count').get(timeSheets.count);
+    app.route('/api/time-sheets/employees').post(timeSheets.getEmployees);
     app.route('/api/time-sheets').post(timeSheets.insert);
     app.route('/api/time-sheets/:id').get(timeSheets.get);
     app.route('/api/time-sheets/:id').put(timeSheets.update);
     app.route('/api/time-sheets/:id').delete(timeSheets.delete);
+
+    app.route('/api/type-payments').get(typePayments.getAll);
+    app.route('/api/type-payments/count').get(typePayments.count);
+    app.route('/api/type-payments').post(typePayments.insert);
+    app.route('/api/type-payments/:id').get(typePayments.get);
+    app.route('/api/type-payments/:id').put(typePayments.update);
+    app.route('/api/type-payments/:id').delete(typePayments.delete);
+
+    app.route('/api/payments').get(payments.getAll);
+    app.route('/api/payments/count').get(payments.count);
+    app.route('/api/payments').post(payments.insert);
+    app.route('/api/payments/:id').get(payments.get);
+    app.route('/api/payments/:id').put(payments.update);
+    app.route('/api/payments/:id').delete(payments.delete);
+
+    app.route('/api/settings').get(settings.getAll);
+    app.route('/api/settings/count').get(settings.count);
+    app.route('/api/settings').post(settings.insert);
+    app.route('/api/settings/:id').get(settings.get);
+    app.route('/api/settings/:id').put(settings.update);
+    app.route('/api/settings/:id').delete(settings.delete);    
 }

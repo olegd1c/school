@@ -48,7 +48,9 @@ recruitmentSchema.virtual('company', {
   });
 */  
 
-const Charges = mongoose.model('Charges', ChargeSchema);
-const Recruitments = mongoose.model('Recruitments', recruitmentSchema);
+recruitmentSchema.virtual('recruimentId').get(function() { return this._id; });
+
+const Charges = mongoose.model('Charge', ChargeSchema);
+const Recruitments = mongoose.model('Recruitment', recruitmentSchema);
 
 export default Recruitments;

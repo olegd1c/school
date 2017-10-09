@@ -8,3 +8,5 @@ export * from './type-work';
 export * from './unit';
 export * from './type-payment';
 export * from './time-sheet';
+export * from './payment';
+export * from './setting';

@@ -52,8 +52,7 @@ export class TimeSheetEditComponent implements OnInit {
                         }
                     );
 
-                    this.addItemForm.patchValue({number: item.number, companyId: item.companyId,
-                        date: item.date, details: item.details});
+                    this.addItemForm.patchValue(item);
                 },
                 error => console.log(error),
                 () => this.countLoading++
@@ -116,6 +115,8 @@ export class TimeSheetEditComponent implements OnInit {
             countHospitalDays: [''],
             countVacationDays: [''],
             countNightShift: [''],
+            salary: [''],
+            //recruimentId: [''],
         });
     }
 
