@@ -45,4 +45,25 @@ export default class PaymentsCtrl extends BaseCtrl {
     };
 
     //db.blog.posts.findOne( { }, { "comments" : { "$slice" : 10 } } );
+
+    getSalaryPayment = (req, res) => {
+        console.log(req.body);
+        const params = req.body.params;
+        
+        this.model.findOne({ 
+            companyId: params.companyId,
+            date : {
+                $gte: params.start,
+                $lte: params.end
+            }
+        })
+        .exec(function(err, items) {
+            if(err) return console.error(err);
+            let data = JSON.parse(JSON.stringify(items));
+            
+            console.log('getSalaryPayment');
+            console.log(items);
+            res.status(200).json(data);
+        });
+    };     
 }

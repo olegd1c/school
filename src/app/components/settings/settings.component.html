@@ -19,20 +19,22 @@
                 </a>
             </column>
         </row>
-        <br>
+        <br>        
         <div *ngIf="item">
+            <row><h2>Виплати</h2></row>
             <row>
                 <column md=4><b>Зарплата:</b></column>
                 <column md=2>{{item.salaryId?.name}}</column>
             </row>
             <row>
                 <column md=4><b>Аванс:</b></column>
-                <column md=2>{{item.prepaymentId?.name}}</column>                
+                <column md=2>{{item.prepaymentId?.name}}</column>
             </row>
             <row>
                 <column md=4><b>Аванс, відсоток виплати:</b></column>
-                <column md=2>{{item.percentPrepayment}}</column>                       
+                <column md=2>{{item.percentPrepayment}}</column>
             </row>
+            <row><h2>Нарахування</h2></row>
         </div>
     </container>
 </div>

@@ -1,6 +1,11 @@
 
 import { TypeCharge, Company, Individual, Position, TypeBudget, TypePayment } from '@app/models';
 
+export enum Budgeting {
+    PLAN = 0,
+    FACT = 1
+}
+
 export class DetailsPayment {    
     individualId: Individual = undefined;
     positionId: Position = undefined;
@@ -8,7 +13,7 @@ export class DetailsPayment {
     typeChargeId: TypeCharge = undefined;
     month: Date = undefined; 
     sum: number = undefined;
-
+    budgeting: Budgeting = undefined;
     constructor(){        
     }    
 }

@@ -2,8 +2,9 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@angular/forms';
 import { ToastComponent } from '@app/components//toast/toast.component';
 import { TimeSheetsService, IndividualsService, CompaniesService, PositionsService, RecruitmentsService, PaymentsService, TypePaymentsService,
-    TypeBudgetsService, TypeChargesService } from '@app/services';
-import { TimeSheet, Company, Individual, Position, Payment, TypePayment, TypeBudget, TypeCharge } from '@app/models';
+    TypeBudgetsService, TypeChargesService, SettingsService } from '@app/services';
+import { TimeSheet, Employee, Company, Individual, Position, Payment, TypePayment, TypeBudget, TypeCharge, Setting, 
+        DetailsPayment, Budgeting } from '@app/models';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -23,14 +24,16 @@ export class PaymentEditComponent implements OnInit {
     public _title = '';
     public _title_button = '';
     public isEditing = false;
-    public loadingTotal = 7;
+    public loadingTotal = 8;
     public addItemForm: FormGroup;
     private static MAIN_URL = '/main/payments';
-    public employees: any[];
+    public employees: Employee[];
+    public settings: Setting;
 
     constructor(private dataService: PaymentsService, private timeSheetsService: TimeSheetsService, private individualsService: IndividualsService,
         private companiesService: CompaniesService, private positionsService: PositionsService, private typePaymentsService: TypePaymentsService,
         private recruitmentsService: RecruitmentsService, private typeBudgetsService: TypeBudgetsService, private typeChargesService: TypeChargesService,
+        private settingsService: SettingsService,
         public toast: ToastComponent, private router: Router, private route: ActivatedRoute,
         public _fb: FormBuilder) { }
 
@@ -118,6 +121,14 @@ export class PaymentEditComponent implements OnInit {
             error => console.log(error),
             () => this.countLoading++
         );
+
+        this.settingsService._get().subscribe(
+            data => {
+                this.settings = data[0];
+            },
+            error => console.log(error),
+            () => this.countLoading++
+        );
     }
 
     private createForm() {
@@ -140,6 +151,7 @@ export class PaymentEditComponent implements OnInit {
             typeChargeId: [''],
             month: [''],
             sum: [''],
+            budgeting: ['']
         });
     }
 
@@ -158,7 +170,6 @@ export class PaymentEditComponent implements OnInit {
             this.dataService._add(this.addItemForm.value).subscribe(
                 res => {
                     const newPosition = res;
-                    // this.recruitments.push(newPosition);
                     this.addItemForm.reset();
                     this.toast.setMessage('recruitments added successfully.', 'success');
                     this.router.navigate([PaymentEditComponent.MAIN_URL]);
@@ -192,21 +203,64 @@ export class PaymentEditComponent implements OnInit {
             companyId: this.addItemForm.controls.companyId.value, start: start,
             end: end
         };
-        this.timeSheetsService.getEmployees(data).subscribe(
-            res => {
-                if(res) {
-                    this.employees = res.details;
-                    let control = <FormArray>this.addItemForm.controls.details;
-                    while (control.length) {
-                        control.removeAt(0);
+
+        if(this.addItemForm.controls.typePaymentId.value == this.settings.prepaymentId._id){
+            this.timeSheetsService.getEmployees(data).subscribe(
+                res => {
+                    if(res) {
+                        let employees = res.details;
+                        let control = <FormArray>this.addItemForm.controls.details;
+                        while (control.length) {
+                            control.removeAt(0);
+                        }
+                        let paymentDetails: DetailsPayment[] = [];
+                        employees.forEach((employee) => {
+                            this.addDetail();
+                            this.addDetail();
+                            let rowDetailPlan: DetailsPayment = Object.assign({}, employee);
+                            rowDetailPlan.budgeting = Budgeting.PLAN;
+                            rowDetailPlan.sum = -employee.salary;
+                            paymentDetails.push(rowDetailPlan);
+
+                            let rowDetail: DetailsPayment = Object.assign({}, employee);
+                            if(this.addItemForm.controls.typePaymentId.value == this.settings.prepaymentId._id){
+                                let sum: number = this.settings.percentPrepayment/100*employee.salary;
+                                rowDetail.sum = Math.round(sum*100)/100 ;
+                            }
+                            rowDetail.budgeting = Budgeting.FACT;
+                            paymentDetails.push(rowDetail);
+                        });
+                        
+                        this.addItemForm.patchValue({ details: paymentDetails });
                     }
-
-                    this.employees.forEach(() => this.addDetail());
-                    this.addItemForm.patchValue({ details: this.employees });
-                }    
-            },
-            error => console.log(error)
-        );
+                },
+                error => console.log(error)
+            );
+        } else if(this.addItemForm.controls.typePaymentId.value == this.settings.salaryId._id) {
+            this.dataService.getSalaryPayment(data).subscribe(
+                res => {
+                    if(res) {
+                        let employees = res.details;
+                        let control = <FormArray>this.addItemForm.controls.details;
+                        while (control.length) {
+                            control.removeAt(0);
+                        }
+                        let paymentDetails: DetailsPayment[] = [];
+                        employees.forEach((employee) => {
+                            this.addDetail();
+                            let rowDetail: DetailsPayment = Object.assign(employee);
+                            if(this.addItemForm.controls.typePaymentId.value == this.settings.prepaymentId._id){
+                                let sum: number = this.settings.percentPrepayment/100*employee.salary;
+                                rowDetail.sum = Math.round(sum*100)/100 ;
+                            }
+                            paymentDetails.push(rowDetail);
+                        });
+                        
+                        this.addItemForm.patchValue({ details: paymentDetails });
+                    }
+                },
+                error => console.log(error)
+            );
+        }
     }
-
 }

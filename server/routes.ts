@@ -103,6 +103,7 @@ export default function setRoutes(app) {
 
     app.route('/api/payments').get(payments.getAll);
     app.route('/api/payments/count').get(payments.count);
+    app.route('/api/payments/salary-payment').post(payments.getSalaryPayment);
     app.route('/api/payments').post(payments.insert);
     app.route('/api/payments/:id').get(payments.get);
     app.route('/api/payments/:id').put(payments.update);

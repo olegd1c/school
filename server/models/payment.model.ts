@@ -1,5 +1,10 @@
 import * as mongoose from 'mongoose';
 
+const enum Budgeting {
+    PLAN = 0,
+    FACT = 1
+  }
+
 const paymentDetailsSchema = new mongoose.Schema({
     
     individualId: {type: mongoose.Schema.Types.ObjectId, ref: 'Individual'},
@@ -10,7 +15,11 @@ const paymentDetailsSchema = new mongoose.Schema({
         type: Date,
         default: null
     },
-    sum: Number
+    sum: Number,
+    budgeting: {
+        type: Number,
+        enum: [Budgeting.PLAN, Budgeting.FACT]
+    }
 });
 
 const paymentSchema = new mongoose.Schema({
