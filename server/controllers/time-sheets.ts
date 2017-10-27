@@ -28,7 +28,8 @@ export default class TimeSheetCtrl extends BaseCtrl {
                 $lte: params.end
             }
         })
-        .exec(function(err, items) {
+        .populate('details.positionId')
+        .then(function(err, items) {
             if(err) return console.error(err);
             let data = JSON.parse(JSON.stringify(items));
             

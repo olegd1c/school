@@ -29,6 +29,7 @@ export class PaymentEditComponent implements OnInit {
     private static MAIN_URL = '/main/payments';
     public employees: Employee[];
     public settings: Setting;
+    private paymentDetailsPlan: DetailsPayment[] = [];
 
     constructor(private dataService: PaymentsService, private timeSheetsService: TimeSheetsService, private individualsService: IndividualsService,
         private companiesService: CompaniesService, private positionsService: PositionsService, private typePaymentsService: TypePaymentsService,
@@ -177,6 +178,7 @@ export class PaymentEditComponent implements OnInit {
                 error => console.log(error)
             );
         } else {
+            this.addItemForm.value.details = this.addItemForm.value.details.concat(this.paymentDetailsPlan);
             const data = Object.assign({ _id: this.itemId }, this.addItemForm.value);
             this.dataService._edit(data).subscribe(
                 res => {
@@ -213,14 +215,14 @@ export class PaymentEditComponent implements OnInit {
                         while (control.length) {
                             control.removeAt(0);
                         }
+                        this.paymentDetailsPlan = [];
                         let paymentDetails: DetailsPayment[] = [];
                         employees.forEach((employee) => {
-                            this.addDetail();
                             this.addDetail();
                             let rowDetailPlan: DetailsPayment = Object.assign({}, employee);
                             rowDetailPlan.budgeting = Budgeting.PLAN;
                             rowDetailPlan.sum = -employee.salary;
-                            paymentDetails.push(rowDetailPlan);
+                            this.paymentDetailsPlan.push(rowDetailPlan);
 
                             let rowDetail: DetailsPayment = Object.assign({}, employee);
                             if(this.addItemForm.controls.typePaymentId.value == this.settings.prepaymentId._id){

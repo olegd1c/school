@@ -8,7 +8,7 @@ const ChargeSchema = new mongoose.Schema({
     count: Number
 });
 
-const recruitmentSchema = new mongoose.Schema({
+const RecruitmentSchema = new mongoose.Schema({
     number: String,
     date: {
         type: Date,
@@ -38,19 +38,19 @@ const recruitmentSchema = new mongoose.Schema({
         type: Date,
         default: null
     },
+}, {
+    toObject: {
+    virtuals: true
+    },
+    toJSON: {
+    virtuals: true 
+    }
 });
 
-/*
-recruitmentSchema.virtual('company', {
-    ref: 'Company',
-    localField: '_id',
-    foreignField: 'name'
-  });
-*/  
-
-recruitmentSchema.virtual('recruimentId').get(function() { return this._id; });
+RecruitmentSchema.virtual('recruimentId').get(function() { return this._id.toString();
+    });
 
 const Charges = mongoose.model('Charge', ChargeSchema);
-const Recruitments = mongoose.model('Recruitment', recruitmentSchema);
+const Recruitments = mongoose.model('Recruitment', RecruitmentSchema);
 
 export default Recruitments;
